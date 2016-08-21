@@ -2,12 +2,22 @@
 package com.revature.controllers;
 
 import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.revature.beans.Client;
 import com.revature.beans.Invoice;
@@ -41,7 +51,7 @@ public class AjaxController
 	 * ================!!!!!CLIENT CONTOLLER STUFFS!!!!!================
 	 * =================================================================
 	 */
-	/*	@RequestMapping(
+	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
 			produces="application/json")
@@ -114,7 +124,7 @@ public class AjaxController
 		request.getSession().setAttribute("user", client.getName());
 		return mv;
 	}
-*/
+
 	/* =================================================================
 	 * ================!!!!!CLIENT CONTOLLER STUFFS!!!!!================
 	 * =================================================================
@@ -126,7 +136,7 @@ public class AjaxController
 	 * ==================================================================
 	 */
 	
-	/*public List<Invoice> getInvoices()
+	public List<Invoice> getInvoices()
 	{
 		return invoices;
 	}
@@ -136,7 +146,7 @@ public class AjaxController
 			HttpServletRequest request,
 			HttpServletResponse response)
 	{		
-		Set<Invoice> invoices = bl.getClientInvoices(request.getParameter("clientName"));
+		List<Invoice> invoices = bl.getClientInvoices(request.getParameter("clientName"));
 
 		this.servletContext.setAttribute("Invoices", invoices); //update invoices
 		
@@ -184,7 +194,7 @@ public class AjaxController
 		mv.setViewName("invoiceView"); // view.jsp IRVR
 		mv.addObject("success", "Successfully added invoice!"); // request-scoped variables
 		return mv;
-	}*/
+	}
 
 	/* ==================================================================
 	 * ================!!!!!INVOICE CONTOLLER STUFFS!!!!!================
@@ -197,7 +207,7 @@ public class AjaxController
 	 * ==================================================================
 	 */
 	
-/*	public List<Product> getProducts()
+	public List<Product> getProducts()
 	{
 		return products;
 	}
@@ -234,7 +244,7 @@ public class AjaxController
 		mv.addObject("success", "Successfully added product!"); // request-scoped variables
 		return mv;
 	}
-*/
+
 	
 	/* ==================================================================
 	 * ================!!!!!PRODUCT CONTOLLER STUFFS!!!!!================
