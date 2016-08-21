@@ -20,6 +20,7 @@ import org.hibernate.type.BlobType;
 
 @Entity
 @Table(name="BEARDO_PRODUCTS")
+@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
 public class Product 
 {
 	@Id
