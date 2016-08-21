@@ -95,8 +95,9 @@ public class DataLayerAccess
 		try{
 		
 			List<Client> currentClients = dao.getAllClients();
-		tx.commit();
-		return currentClients;
+			tx.commit();
+			System.out.println("Data Layer " + currentClients);
+			return currentClients;
 		
 		}catch(Throwable t){
 			tx.rollback();
@@ -248,6 +249,7 @@ public class DataLayerAccess
 		try{
 		
 			List<Product> products = dao.getAllProducts();
+			System.out.println("Data Layer: " + products);
 			tx.commit();
 			return products;
 		}catch(Throwable t){

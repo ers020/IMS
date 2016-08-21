@@ -27,7 +27,7 @@ public class ClientType
 	//@OneToMany(fetch=FetchType.EAGER, mappedBy="clientType")
 	//@JoinColumn(name="CLIENT_TYPE_DESCRIPTION")
 	@Column(name="CLIENT_TYPE_DESCRIPTION", nullable=false)
-	private String clientList;
+	private String clientType;
 	
 /*	@OneToMany
 	@JoinTable(name="CLIENT_TYPE_SET",
@@ -76,11 +76,11 @@ public class ClientType
 //	}
 
 	public String getClientList() {
-		return clientList;
+		return clientType;
 	}
 
-	public void setClientList(String clientList) {
-		this.clientList = clientList;
+	public void setClientList(String clientType) {
+		this.clientType = clientType;
 	}
 
 	public ClientType()
@@ -88,15 +88,15 @@ public class ClientType
 		super();
 	}
 
-	public ClientType(int id, String clientList) {
+	public ClientType(int id, String clientType) {
 		super();
 		this.id = id;
-		this.clientList = clientList;
+		this.clientType = clientType;
 	}
 
 	@Override
 	public String toString() {
-		return "ClientType [id=" + id + ", clientList=" + clientList + "]";
+		return "ClientType [id=" + id + ", clientList=" + clientType + "]";
 	}
 	
 	

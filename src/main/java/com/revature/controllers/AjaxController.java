@@ -47,13 +47,21 @@ public class AjaxController
 	 * ================!!!!!CLIENT CONTOLLER STUFFS!!!!!================
 	 * =================================================================
 	 */
+	
+	@RequestMapping(value="clientsPage.do", method=RequestMethod.GET)
+	public String hello(HttpServletRequest req){
+		req.setAttribute("clients",clients); // commandName=this blank object
+		return "clientsPage";
+	}
+	
 	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
 			produces="application/json")
 	@ResponseBody
-	public List<Client> getClients()
+	public List<Client> getClients(HttpServletRequest request, HttpServletResponse response)
 	{
+		request.setAttribute("clients", clients);
 		return clients;
 	}
 
@@ -187,9 +195,12 @@ public class AjaxController
 	 * ==================================================================
 	 */
 
-	public List<Product> getProducts()
+	
+	@RequestMapping(value="productPage.do", method=RequestMethod.GET)
+	public String getProducts(HttpServletRequest request, HttpServletResponse response)
 	{
-		return products;
+		request.setAttribute("products",products); // commandName=this blank object
+		return "productPage";
 	}
 		
 	public List<Product> getProductsByClient(

@@ -75,20 +75,22 @@ public class ManagementDAO
 	public List<Client> getAllClients()
 	{
 		//log.info("Query DB for All Clients");
-		/*String hql = "FROM Client";
+		String hql = "FROM Client";
 		
-		Query query = session.createQuery(hql);*/
+		Query query = session.createQuery(hql);
 		//something is wrong with this code
-		Criteria criteria = session.createCriteria(Client.class).createAlias("Client.id", "id")
-							.addOrder(org.hibernate.criterion.Order.asc("id"));
+		//Criteria criteria = session.createCriteria(Client.class).createAlias("Client.id", "id")
+			//				.addOrder(org.hibernate.criterion.Order.asc("id"));
 							//Hopefully this works
 							//AddOrder might not work
 		
-		@SuppressWarnings("unchecked")
-		List<Client> results = criteria.list();
+		//@SuppressWarnings("unchecked")
+		//List<Client> results = criteria.list();
 		
-		/*@SuppressWarnings("unchecked")
-		List<Client> results = new HashList<Client>(query.list());*/
+	//	System.out.println("Criteria " + criteria.toString());
+		
+		@SuppressWarnings("unchecked")
+		List<Client> results = query.list();
 		
 		//log.info("Return All Clients results");
 		return results;
@@ -213,12 +215,17 @@ public class ManagementDAO
 	//Get products
 	public List<Product> getAllProducts()
 	{
+		//String hql = "FROM BEARDO_PRODUCTS";
+		
+		//Query query = session.createQuery(hql);
 		//log.info("Query DB for List of Products");
-		String productQuery = "FROM com.revature.beans.Product";
+		String productQuery = "FROM BEARDO_PRODUCTS";
 		Query query = session.createQuery(productQuery);
 		
+		System.out.println(query.toString());
 		@SuppressWarnings("unchecked")
 		List<Product> products = query.list();
+		System.out.println(products);
 		//log.info("Result for List of Products");
 		return products;
 	}

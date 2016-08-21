@@ -48,10 +48,10 @@
 		  			<td><c:out value="${c.id}"></c:out></td>
 		  			<td><c:out value="${c.name}"></c:out></td>
 		  			<td><c:out value="${c.email}"></c:out></td>
-		  			<td><c:out value="${c.address.line1}, ${c.address.line2}, ${c.address.city}, ${c.address.state} ${c.address.zip}"></c:out></td>
+		  			<td><c:out value="${c.address.city}, ${c.address.state.name}"></c:out></td>
 		  			<td>
-		  				<c:if test="${c.type.id} == 1"><c:out value="Supplier"></c:out></c:if>
-		  				<c:if test="${c.type.id} == 2"><c:out value="Retailer"></c:out></c:if>
+		  				<c:if test="${c.clientType.id == 1}"><c:out value="Supplier"></c:out></c:if>
+		  				<c:if test="${c.clientType.id == 2}"><c:out value="Retailer"></c:out></c:if>
 		  			</td>
 		  			<td><input type="button" value="Edit!"></td> <!-- Need to make this...Ajax-y... -->
 		  		</tr>
@@ -114,5 +114,33 @@
 	
 		
 </body>
+<script type="text/javascript">
+$(document).ready(function(){
 
+	$.ajax({
+		headers: {          
+    			"Accept" : "application/json"
+    		},
+		url:"https://localhost9001/IMS/getAll.do",
+		method: "GET",
+		success:function(response){
+		$("#personTable").html("<tr><th>Name</th><th>Age</th><th>Email</th></tr>");
+			$.each(response, function(c, clients){
+				$("#personTable").append(
+					"<tr><td>" 		+ clients.id
+					+"</td><td>" 	+ clients.name
+					+"</td><td>"	+ clients.email
+					+"</td><td>"	+ clients.address.city + ", " + client.state.name
+					+"</td><td>"	+ clients.clientType.clientType
+					+"</td></tr>");
+			
+			});
+		}
+		
+		
+	
+	})
+
+})
+</script>
 </html>

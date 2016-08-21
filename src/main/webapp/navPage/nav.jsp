@@ -20,9 +20,9 @@
 	<ul>
 		<li><a href="${pageContext.servletContext.contextPath}/index.jsp">Home</a></li>
 		<li><a href="${pageContext.servletContext.contextPath}/invoicesPage.jsp">Create Invoice</a></li>
-		<li><a href="#">Order Items</a></li>
+		<li><a href="${pageContext.servletContext.contextPath}/productPage.do">Products</a></li>
 		<li><a href="#">Check Stock</a></li>
-		<li><a href="${pageContext.servletContext.contextPath}/clientsPage.jsp">Clients</a></li>
+		<li><a href="${pageContext.servletContext.contextPath}/clientsPage.do">Clients</a></li>
 		<li><a href="#">Generate Report</a></li>
 		<li><a href="#">About</a></li>
 	</ul>
