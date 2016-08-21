@@ -27,22 +27,22 @@
 
     });
 	
-  // function ()
-   // {
-    //    $.ajax({
-    //        type: "get",
-     //       url: "http://localhost:9001/imsWeb/clientInfo.do", //this is my servlet
-      //      data: "input=" +$('#ip').val()+"&output="+$('#op').val(),
-       //     success: function(msg)
-        //    {      
-      //             openModal();
-       //     }
-       // });
-   // }
+ function clientInfo()
+{
+   $.ajax({
+         type: "get",
+        url: "http://localhost:9001/imsWeb/clientInfo.do", //this is my servlet
+          data: "input=" +$('#ip').val()+"&output="+$('#op').val(),
+    success: function(msg)
+   {      
+            openModal();
+     }
+	});
+}
 </script> 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Clients!</title>
+<title>Generate Invoice</title>
 <!-- BootStrap -->
 
 	<!-- MODAL BOOTSTRAP -->
@@ -79,27 +79,13 @@
 	
 	<div class="container body .col-xs-12 .col-sm-6 .col-lg-8">
 
-	<div id="NAME THIS WHAT YOU WANT" class="visible">
-		<input type="radio" name="invChoice" value="Incoming"/>
-		<input type="radio" name="invChoice" value="Outgoing"/>
-		
-		<select name="clients" onchange="">  <!-- combo box for clients based on type, needs AJAX -->
-			<option value="def" selected>Please select a client!</option>
-			<c:forEach var="c" items="${clients}">
-				<option value="${c.id}" onclick="javascript:getProducts(${c.name})">${c.name}</option>
-			</c:forEach>
-		</select>
-		
-		<select name="products">  <!-- combo box for clients based on type, needs AJAX -->
-			<option value="def" selected>Please select a product!</option>
-			<c:forEach var="p" items="${products}">
-				<option value="${p.id}">${p.name}</option>
-			</c:forEach>
-		</select>
-		
-		<input type="number" name="numOfProds" onchange="javascript:orderPrice(this.value)"><label>${prodPrice}</label>
-		<button>Change amount!</button>  <!-- THIS LITERALLY DOES NOTHING, AND WILL DO NOTHING, BUT IS NECESSARY FOR THE ABOVE ONCHANGE!!! -->
-		
+	<div id="radioBtn" class="visible radio-inline">
+		<label><input type="radio" name="invChoice" value="Incoming"/>Supplier</label>
+		<label><input type="radio" name="invChoice" value="Outgoing"/>Retailer</label>
+	</div>
+	<br />
+	<br />
+	
 		<table class="invisible">
 			
 		</table>
@@ -108,13 +94,41 @@
 	<div>
 		<table id="invoiceTable">
 			<tr>
-		    	<th>ID</th>
-		    	<th>Price</th>
-		    	<th>Product</th>
-		    	<th>Quantity</th>
 		    	<th>Client</th>
-		    	<th></th>
+		    	<th>Product</th>
+		    	<th>Price</th>
+		    	<th>Quantity</th>
+		    	<th>Cost</th>
+		    	<th>Subtotal</th>
+		    	<th>Option</th>
 		  	</tr>
+		  	<tr>
+		  	<td><span id="dropDownClient"> 
+				<select name="clients" onchange="">  <!-- combo box for clients based on type, needs AJAX -->
+				<option value="def" selected>Please select a client!</option>
+				<c:forEach var="c" items="${clients}">
+				<option value="${c.id}" onclick="javascript:getProducts(${c.name})">${c.name}</option>
+				</c:forEach>
+				</select>
+				</span>
+			</td>
+			<td>
+				<select name="products">  <!-- combo box for clients based on type, needs AJAX -->
+				<option value="def" selected>Please select a product!</option>
+				<c:forEach var="p" items="${products}">
+				<option value="${p.id}">${p.name}</option>
+				</c:forEach>
+				</select>
+			</td>
+		  	<td><label value="${p.cost}"></label></td>  <!-- THESE ALL NEED WIDTH: 100% IN CSS -->
+		  	 <td><input type="number" name="numOfProds" onchange="javascript:orderPrice(this.value)"><label>${prodPrice}</label>
+				<!--  <button>Change amount!</button>  <!-- THIS LITERALLY DOES NOTHING, AND WILL DO NOTHING, BUT IS NECESSARY FOR THE ABOVE ONCHANGE!!! -->
+			</td>
+		  	 <td><label value="0"></label></td>
+		  	 <td><input type="button" value="Add!"></td>
+		  	 </tr>
+		  	
+		  	
 		  <c:forEach var="i" items="${invoices}">
 		  	<tr onclick="" data-toggle="modal" data-target="#myModal"> <!-- WILL INSERT JS TO SHOW MORE DETAILS IN POP-UP -->
 		  		<td><c:out value="${i.invoiceCK}"></c:out></td>
@@ -126,16 +140,18 @@
 		  	</tr>
 		  </c:forEach>
 		  <tr id="blanktr" class="blanktr"></tr>
-		  <tr>
-		  <td></td>
-		  <td></td>
-		  	 <td><input type="text" name="name" placeholder="Product!"/></td>  <!-- THESE ALL NEED WIDTH: 100% IN CSS -->
-		  	 <td><input type="text" name="name" placeholder="Quantity!"/></td>
-		  	 <td><input type="text" name="name" placeholder="Client!"/></td>
-		  	 <td><input type="button" value="Add!">
-		  </tr>
+		 
+		  	
 		</table>
+		<br />
+		
+		<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
+			<jsp:include page="/footerPage/footer.jsp"></jsp:include>
+		</div>
+		
+		<br />
 	</div>
+	
 	</div>
 	<br />
 	
@@ -172,9 +188,7 @@
 	</div>
 	<br />
 	
-		<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
-		<jsp:include page="/footerPage/footer.jsp"></jsp:include>
-	</div>
+
 	<br />
 	</div>
 	

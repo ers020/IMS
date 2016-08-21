@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="BEARDO_ORDER_INVOICE")  //FORMERLY KNOWN AS "IMS_PO_LINE"
+//@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
 public class Invoice 
 {
 	/*@Id

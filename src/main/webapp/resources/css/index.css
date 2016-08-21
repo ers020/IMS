@@ -14,7 +14,7 @@ body{
 table, th, td, tr{
 	text-align: center;
 	font-weight: bold;
-	padding-left: 60px;
+	
 	
 }
 
@@ -118,4 +118,17 @@ li a:active{
 .navbar-default, .navbar-brand{
 	background-color : transparent;
 	border-color: transparent;
+}
+
+#radioBtn {
+	float: left;
+}
+
+#dropDownClient{
+	float: right;
+	padding-right: 2em;
+}
+
+label{
+	padding-right: 2em;
 }
