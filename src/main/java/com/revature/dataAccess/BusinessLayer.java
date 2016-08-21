@@ -153,7 +153,7 @@ public class BusinessLayer {
 	//get Client list for drop down based on the user's choice
 	public List<Client> getClientList(int clientTypeId){
 		List<Client> clients = dla.clientList(clientTypeId);
-		
+		System.out.println("STUPID");
 		return clients;
 	}
 	
