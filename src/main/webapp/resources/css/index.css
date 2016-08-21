@@ -1,0 +1,121 @@
+/* CSS3 Page for project */
+
+*{
+	font-family: 'Roboto', sans-serif;
+}
+
+body{
+	background-color: #333333;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position: center;
+}
+
+table, th, td, tr{
+	text-align: center;
+	font-weight: bold;
+	padding-left: 60px;
+	
+}
+
+ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+li {
+	display: inline;
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	margin-left: 20px;
+	padding: 14px 16px;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+li a:hover, li a:visited, li a:active, a:focus{
+	background-color: #333333;
+	color:white;
+	text-decoration: none;
+}
+
+li a:active{
+	background-color: #990000;
+	text-decoration: none;
+}
+
+
+.container{
+	center: true;
+	text-align: center;
+	color: black;	
+	
+}
+
+.nav, .footer{
+	border-radius: 0 0 15px 15px;
+}
+
+.header, .nav, .footer{
+	margin: 0 auto 0 auto;
+	width: 100%;
+    background: red; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#003399, #333333); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#003399, #333333); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#003399, #333333); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#003399, #333333); /* Standard syntax (must be last) */
+    box-shadow: 0 10px 10px  grey;
+    color: white;
+    background-color: #f2f2f2;
+    
+}
+
+.main{
+	box-shadow: 0 10px 5px #262626;
+	background-color: #f2f2f2;
+	white-space: nowrap;
+	margin: 0 auto 0 auto;
+	border-radius: 0 0 15px 15px;
+	margin-top: -5px;
+	
+}
+.body{
+	margin: 0 auto 0 auto;
+	text-align: center;
+}
+
+.login{
+	margin: 0 auto 0 auto;
+	text-align: center; 
+	
+}
+
+.spn1{
+	float: right;
+	margin-bottom: 15px;
+	margin-right: 20px;
+	margin-top: 15px;
+	box-shadow: 0 10px 10px  #333333;
+    border-radius: 0 0 15px 15px;
+}
+
+.spn2{
+	text-align: center;
+	center: true;
+	margin-top: 20px;
+	margin-left: 40px;
+	float: left;
+	
+}
+
+.navbar-default, .navbar-brand{
+	background-color : transparent;
+	border-color: transparent;
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+	
+	<!-- configure SessionFactory -->
+		<property name="hibernate.connection.driver_class">
+			oracle.jdbc.OracleDriver
+		</property>
+		<property name="hibernate.connection.url">
+			jdbc:oracle:thin:@orcl.cwgzwqm8d9ca.us-west-2.rds.amazonaws.com:1521:orcl
+		</property>
+		<property name="hibernate.connection.username">
+			eerwin01
+		</property>
+		<property name="hibernate.connection.password">
+			ArikEric
+		</property>
+		<property name="hibernate.connection.pool_size">
+			20
+		</property>
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.Oracle10gDialect
+		</property>
+		<!-- won't do this on the job, but will save us time in training -->
+		<property name="hibernate.hbm2ddl.auto">
+			update
+		</property>
+		<property name="javax.persistence.validation.mode">
+			none
+		</property>
+
+		<!-- annotated Beans -->
+			<mapping class="com.revature.beans.Address" />
+			<mapping class="com.revature.beans.CategoryDescription" />		
+			<mapping class="com.revature.beans.Client" /> 
+			<mapping class="com.revature.beans.ClientType" /> 
+			<mapping class="com.revature.beans.Invoice" />
+			<mapping class="com.revature.beans.Order" />
+			<mapping class="com.revature.beans.Product" /> 
+			<mapping class="com.revature.beans.State" />
+		
+	</session-factory>
+	
+</hibernate-configuration>
