@@ -14,8 +14,10 @@ body{
 table, th, td, tr{
 	text-align: center;
 	font-weight: bold;
-	
-	
+}
+
+th, td, tr{
+	width: 10em;
 }
 
 ul{
