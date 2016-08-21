@@ -120,12 +120,21 @@
 				</c:forEach>
 				</select>
 			</td>
-		  	<td><label value="${p.cost}"></label></td>  <!-- THESE ALL NEED WIDTH: 100% IN CSS -->
+		  	<td>
+		  		<label value="${p.cost}"></label>
+		  	</td>  <!-- THESE ALL NEED WIDTH: 100% IN CSS -->
 		  	 <td><input type="number" name="numOfProds" onchange="javascript:orderPrice(this.value)"><label>${prodPrice}</label>
 				<!--  <button>Change amount!</button>  <!-- THIS LITERALLY DOES NOTHING, AND WILL DO NOTHING, BUT IS NECESSARY FOR THE ABOVE ONCHANGE!!! -->
 			</td>
-		  	 <td><label value="0"></label></td>
-		  	 <td><input type="button" value="Add!"></td>
+		  	 <td>
+		  	 	<label value="0" name="initalCost"></label>
+		  	 </td>
+		  	 <td>
+		  	 	<label value="0" name="subTotal"></label>
+		  	 </td>
+		  	 <td>
+		  	 	<input type="button" value="Add!">
+		  	 </td>
 		  	 </tr>
 		  	
 		  	

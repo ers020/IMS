@@ -41,7 +41,7 @@
 		    		<th>Email</th>
 		    		<th>Address</th>
 		    		<th>Type</th>
-		    		<th></th>
+		    		<th>Option</th>
 		  		</tr>
 		 		 <c:forEach var="c" items="${clients}">
 		  		<tr>
