@@ -21,8 +21,8 @@ public class BusinessLayer {
 	
 	//Needs to have a State Name passed in to get State.
 	//Use returned state object for making the Address
-	public State getState(String stateName){
-		State state = dla.getState(stateName);
+	public State getState(int id){
+		State state = dla.getState(id);
 		return state;
 	}
 	
@@ -93,8 +93,9 @@ public class BusinessLayer {
 	//get all products
 	public List<Product> getAllProducts(){
 		
-		List<Product> products = dla.getProducts();
-		System.out.println(products);
+
+		List<Product> products = dla.getAllProducts();
+		System.out.println("Business Layer " + products);
 		return products;
 	}
 	
@@ -200,6 +201,12 @@ public class BusinessLayer {
 	public List<Product> getProdsByClient(int parseInt) {
 		
 		return null;
+	}
+
+	public List<State> getAllStates() {
+		List<State> states = dla.getAllStates();
+		
+		return states;
 	}
 
 

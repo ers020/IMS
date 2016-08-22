@@ -2,25 +2,23 @@
 package com.revature.controllers;
 
 import java.util.List;
-import java.util.Vector;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.revature.beans.Address;
 import com.revature.beans.Client;
+import com.revature.beans.ClientType;
 import com.revature.beans.Invoice;
 import com.revature.beans.Product;
+import com.revature.beans.State;
 import com.revature.dataAccess.BusinessLayer;
 
 @Controller
@@ -30,12 +28,11 @@ public class AjaxController
 	private ServletContext servletContext; //instance var
 
 	private BusinessLayer bl = new BusinessLayer();
-	
 	/*private List<Client> clients = new Vector<Client>();
 	private List<Client> invoices = new Vector<Client>();
 	private List<Client> products = new Vector<Client>();*/
 	
-
+	
 	private List<Client> clients = bl.getAllClients();
 	private List<Invoice> invoices = bl.getInvoices();
 	private List<Product> products = bl.getAllProducts();
@@ -49,12 +46,41 @@ public class AjaxController
 	 */
 	
 	@RequestMapping(value="clientsPage.do", method=RequestMethod.GET)
-	public String hello(HttpServletRequest req){
+	public String clientPage(HttpServletRequest req){
 		req.setAttribute("clients",clients); // commandName=this blank object
+		List<State> states = bl.getAllStates();
+		req.setAttribute("states", states);
+		
+		List<ClientType> clientTypes = bl.getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
 		return "clientsPage";
 	}
 	
-	@RequestMapping(
+	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String addClient(HttpServletRequest req, HttpServletResponse resp){
+		
+		System.out.println(req.getParameter("id"));
+		State state = bl.getState(Integer.parseInt(req.getParameter("id")));
+		Address address = new Address(1, req.getParameter("line1"), req.getParameter("line2"), 
+				req.getParameter("city"), state, req.getParameter("zip"));
+		ClientType clientType = bl.getClientType(Integer.parseInt(req.getParameter("tId")));
+		Client client = new Client(1, req.getParameter("name"), req.getParameter("email"),
+				req.getParameter("pocName"), req.getParameter("phone"), req.getParameter("fax"),
+				address, clientType);
+		bl.addClient(client);
+		clients = bl.getAllClients();
+		req.setAttribute("clients",clients); // commandName=this blank object
+		List<State> states = bl.getAllStates();
+		req.setAttribute("states", states);
+		
+		List<ClientType> clientTypes = bl.getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		
+		return "clientsPage";
+	}
+	
+/*	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
 			produces="application/json")
@@ -62,6 +88,8 @@ public class AjaxController
 	public List<Client> getClients(HttpServletRequest request, HttpServletResponse response)
 	{
 		request.setAttribute("clients", clients);
+		
+		
 		return clients;
 	}
 
@@ -139,12 +167,12 @@ public class AjaxController
 	 * ==================================================================
 	 */
 	
-	public List<Invoice> getInvoices()
+/*	public List<Invoice> getInvoices()
 	{
 		return invoices;
-	}
+	}*/
 	
-	@RequestMapping(value="getInvoice.do", method=RequestMethod.GET)
+/*	@RequestMapping(value="getInvoice.do", method=RequestMethod.GET)
 	public ModelAndView getInvoiceByClient(
 			HttpServletRequest request,
 			HttpServletResponse response)
@@ -196,10 +224,9 @@ public class AjaxController
 	 */
 
 	
-	@RequestMapping(value="productPage.do", method=RequestMethod.GET)
-	public String getProducts(HttpServletRequest request, HttpServletResponse response)
+/*	public String getProducts(HttpServletRequest req)
 	{
-		request.setAttribute("products",products); // commandName=this blank object
+		req.setAttribute("products",products); // commandName=this blank object
 		return "productPage";
 	}
 		

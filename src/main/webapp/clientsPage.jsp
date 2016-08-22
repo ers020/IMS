@@ -4,11 +4,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript">
+
+		function openModal()
+		{
+			$("#clientModal").modal()
+		}
+
+	$(document).ready(function(){
+		$("#addClient").click(function(){
+			var clientName = $("#clientName").val();
+			var email = $("#email").val();
+			var contactName = $("#contactName").val();
+			var phone = $("#phone").val();
+			var fax = $("#fax").val();
+			var adLine1 = $("#adLine1").val();
+			var adLine2 = $("#adLine2").val();
+			var city = $("#city").val();
+			var stateId = $("#state").val();
+			var zip = $("#zip").val();
+			var typeId = $("#type").val();
+			
+			$.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/ims/insertClient.do",
+			method: "POST",
+			data: JSON.stringify({
+				name : clientName, email : email, 
+				pocName : contactName, phone : phone,
+				fax : fax, line1 : adLine1, line2 : adLine2,
+				id : stateId, city : city, zip: zip ,tId : typeId
+			}),
+			success: function(){
+				alert("Added Client successfully!");
+			}
+		});
+	});
+	
+});
+
+</script>
+
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Client Section</title>
 
-	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	
+	<!-- MODAL BOOTSTRAP -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 	<!-- BootStrap -->
 	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.css">
@@ -16,9 +65,16 @@
 	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.js"></script>
 	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
 	
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	
+	<!-- CSS Google Text -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet" type="text/css">
+	
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/index.css">
 
+	
 </head>
 <body>
 
@@ -56,91 +112,102 @@
 		  			<td><input type="button" value="Edit!"></td> <!-- Need to make this...Ajax-y... -->
 		  		</tr>
 		  		</c:forEach>
-		 	 <tr id="blanktr" class="blanktr"></tr>
-		  	<tr>
-		  		<td></td>
-		  	 	<td><input type="text" name="name" placeholder="Name!"/></td>
-		  	 	<td><input type="text" name="name" placeholder="Email!"/></td>
-		  		<td><input type="text" name="name" placeholder="Address!"/></td>
-		  	 	<td><input type="text" name="name" placeholder="Type!"/></td>
-		  	</tr>
 			</table>
 		</div>
-		<br />
+		<br/>
+		
 		<!-- Trigger the modal with a button -->
-		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-		<br />
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#clientModal">Add Client</button>
+		<br />	
 		<br />
 			<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
 				<jsp:include page="/footerPage/footer.jsp"></jsp:include>
 			</div>
 		<br />
-	
 		</div>
 		<br />
-	
+		
+			
 	
 	
 	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
+	<div id="clientModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
 	
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Modal Header</h4>
+	        <h4 class="modal-title">Add a Client</h4>
 	      </div>
 	      <div class="modal-body">
 	      <table id="modal-table">
-	        <tr><td>Name:</td><td>"${client.name}"</td></tr>
-	        <tr><td>Email:</td><td>"${client.email}"</td></tr>
-	        <tr><td>Contact Name:</td><td>"${client.pocName}"</td></tr>
-	        <tr><td>Phone:</td><td>"${client.phone}"</td></tr>
-	        <tr><td>Fax:</td><td>"${client.fax}"</td></tr>
-	        <tr><td>Address:</td><td>"${clientAddress}"</td></tr>
-	        <tr><td>Type:</td><td>"${clientType}"</td></tr>
+	        <tr>
+	        	<td>Client:</td>
+	        	<td><input id="clientName" type="text" class="form-control"></td>
+	        	
+	        </tr>
+	        <tr>
+	        	<td>Email:</td>
+	        	<td><input id="email" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Contact Name:</td>
+	        	<td><input id="contactName" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Phone:</td>
+	        	<td><input id="phone" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Fax:</td>
+	        	<td><input id="fax" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 1:</td>
+	        	<td><input id="adLine1" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 2:</td>
+	        	<td><input id="adLine2" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>City:</td>
+	        	<td><input type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>State:</td>
+	        	<td>
+	        		<select name="state" id="state" class="form-control">
+	        			<option selected disabled>Select a State</option>
+	        			<c:forEach var="s" items="${states}">
+	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
+	        			</c:forEach>
+	        		</select>
+	        	</td>
+	        </tr>
+	        <tr>
+	        	<td>Zip:</td>
+	        	<td><input id="zip" type="text" class="form-control"></td>
+	        </tr>
+	        <tr>
+	        	<td>Type:</td>
+	        	<td>
+					<select name="type" id="type" class="form-control">
+						<option selected disabled>Select Client Type</option>
+						<c:forEach var="t" items="${clientTypes}">
+						<option value="${t.id}"><c:out value="${t.clientList}"></c:out></option>
+						</c:forEach>
+					</select>
+				</td>
+	        </tr>
 	        </table>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
+	    <div class="modal-footer">
+        <button id="addClient" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+      	</div>
 	    </div>
-	
 	  </div>
-
-	  
 	</div>
-	
-		
 </body>
-<script type="text/javascript">
-$(document).ready(function(){
-
-	$.ajax({
-		headers: {          
-    			"Accept" : "application/json"
-    		},
-		url:"https://localhost9001/IMS/getAll.do",
-		method: "GET",
-		success:function(response){
-		$("#personTable").html("<tr><th>Name</th><th>Age</th><th>Email</th></tr>");
-			$.each(response, function(c, clients){
-				$("#personTable").append(
-					"<tr><td>" 		+ clients.id
-					+"</td><td>" 	+ clients.name
-					+"</td><td>"	+ clients.email
-					+"</td><td>"	+ clients.address.city + ", " + client.state.name
-					+"</td><td>"	+ clients.clientType.clientType
-					+"</td></tr>");
-			
-			});
-		}
-		
-		
-	
-	})
-
-})
-</script>
 </html>

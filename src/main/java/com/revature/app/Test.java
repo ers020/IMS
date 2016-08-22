@@ -2,9 +2,12 @@ package com.revature.app;
 
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
-import com.revature.beans.Address;
+import com.revature.beans.Client;
+import com.revature.beans.Product;
 import com.revature.dataAccess.BusinessLayer;
+import com.revature.dataAccess.DataLayerAccess;
 
 public class Test 
 {
@@ -14,7 +17,6 @@ public class Test
 
 	public static void main(String[] args) throws FileNotFoundException 
 	{	
-
 		
 	}
 	

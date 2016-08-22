@@ -15,7 +15,7 @@ public class Client
 	@Id
 	@Column(name="CLIENT_ID", nullable=false)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLIENT_ID_GEN")
-	@SequenceGenerator(name="CLIENT_ID_GEN", sequenceName="CLIENT_ID_SEQ", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="CLIENT_ID_GEN", sequenceName="CLIENT_ID_SEQ", initialValue=2, allocationSize=1)
 	
 	private int id;  //PK, FK FOR ORDER AND CLIENT_TYPE
 

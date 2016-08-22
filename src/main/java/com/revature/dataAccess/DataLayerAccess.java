@@ -243,14 +243,14 @@ public class DataLayerAccess
 		
 	}
 	//drop down of items
-	public List<Product> getProducts(){
+	public List<Product> getAllProducts(){
 	//	log.info("Getting List of all Products");
 		Transaction tx = session.beginTransaction();
 		try{
 		
 			List<Product> products = dao.getAllProducts();
-			System.out.println("Data Layer: " + products);
 			tx.commit();
+			System.out.println("Data Layer: " + products);
 			return products;
 		}catch(Throwable t){
 			tx.rollback();
@@ -318,6 +318,7 @@ public class DataLayerAccess
 			return null;
 		}
 	}
+	
 	public Product getNewProduct(String newItemName) {
 	//	log.info("Get newly created product based on the name.");
 		Transaction tx = session.beginTransaction();
@@ -334,11 +335,11 @@ public class DataLayerAccess
 	//////////////////////// END ADD NEW ITEMS/PRODUCTS //////////////////////////
 	
 	////// ADDITIONS TO ADDING CLIENTS ///////
-	public State getState(String stateName) {
+	public State getState(int id) {
 	//	log.info("Get State.");
 		Transaction tx = session.beginTransaction();
 		try{
-			State state = dao.getState(stateName);
+			State state = dao.getState(id);
 			tx.commit();
 			return state;
 		}catch(Throwable t){
@@ -347,6 +348,7 @@ public class DataLayerAccess
 		}
 		
 	}
+	
 	public Address getAddress(State state) {
 	//	log.info("Get Address based on State code.");
 		Transaction tx = session.beginTransaction();
@@ -360,19 +362,6 @@ public class DataLayerAccess
 		}
 	}
 	
-	public Address getAddressById(int id) {
-	//	log.info("Get Address based on State code.");
-		Transaction tx = session.beginTransaction();
-		
-		try{
-			Address address = dao.getAddressById(id);
-			tx.commit();
-			return address;
-		}catch(Throwable t){
-			tx.rollback();
-			return null;
-		}
-	}
 	public ClientType getClientType(int clientTypeId) {
 	//	log.info("Get Client Type.");
 		Transaction tx = session.beginTransaction();
@@ -386,6 +375,10 @@ public class DataLayerAccess
 		}
 	}
 	////// END ADDITIONS TO ADDING CLIENTS ///////
+	public List<State> getAllStates() {
+		List<State> states = dao.getAllStates();
+		return states;
+	}
 	
 	
 }
