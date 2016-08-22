@@ -24,7 +24,7 @@
 			var stateId = $("#state").val();
 			var zip = $("#zip").val();
 			var typeId = $("#type").val();
-			
+			var client 
 			$.ajax({
 			// contentType application/json
 			headers: {          
@@ -144,41 +144,41 @@
 	      <table id="modal-table">
 	        <tr>
 	        	<td>Client:</td>
-	        	<td><input id="clientName" type="text" class="form-control"></td>
+	        	<td><input id="clientName" type="text" class="form-control" name="clientName"></td>
 	        	
 	        </tr>
 	        <tr>
 	        	<td>Email:</td>
-	        	<td><input id="email" type="text" class="form-control"></td>
+	        	<td><input id="email" type="text" class="form-control" name="email"></td>
 	        </tr>
 	        <tr>
 	        	<td>Contact Name:</td>
-	        	<td><input id="contactName" type="text" class="form-control"></td>
+	        	<td><input id="contactName" type="text" class="form-control" name="contactName"></td>
 	        </tr>
 	        <tr>
 	        	<td>Phone:</td>
-	        	<td><input id="phone" type="text" class="form-control"></td>
+	        	<td><input id="phone" type="text" class="form-control" name="Phone"></td>
 	        </tr>
 	        <tr>
 	        	<td>Fax:</td>
-	        	<td><input id="fax" type="text" class="form-control"></td>
+	        	<td><input id="fax" type="text" class="form-control" name="fax"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 1:</td>
-	        	<td><input id="adLine1" type="text" class="form-control"></td>
+	        	<td><input id="adLine1" type="text" class="form-control" name="adLine1"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 2:</td>
-	        	<td><input id="adLine2" type="text" class="form-control"></td>
+	        	<td><input id="adLine2" type="text" class="form-control" name="adLine2"></td>
 	        </tr>
 	        <tr>
 	        	<td>City:</td>
-	        	<td><input type="text" class="form-control"></td>
+	        	<td><input id="city" type="text" class="form-control" name="city"></td>
 	        </tr>
 	        <tr>
 	        	<td>State:</td>
 	        	<td>
-	        		<select name="state" id="state" class="form-control">
+	        		<select name="state" id="state" class="form-control" id="state">
 	        			<option selected disabled>Select a State</option>
 	        			<c:forEach var="s" items="${states}">
 	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
@@ -188,7 +188,7 @@
 	        </tr>
 	        <tr>
 	        	<td>Zip:</td>
-	        	<td><input id="zip" type="text" class="form-control"></td>
+	        	<td><input id="zip" type="text" class="form-control" name="zip"></td>
 	        </tr>
 	        <tr>
 	        	<td>Type:</td>

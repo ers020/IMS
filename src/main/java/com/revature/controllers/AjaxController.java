@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,7 @@ public class AjaxController
 	
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String addClient(HttpServletRequest req, HttpServletResponse resp){
+	public String addClient(HttpServletRequest req, HttpServletRequest resp){
 		
 		System.out.println(req.getParameter("id"));
 		State state = bl.getState(Integer.parseInt(req.getParameter("id")));
