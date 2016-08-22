@@ -6,7 +6,6 @@
 <head>
 
 
-
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Client Section</title>
 
@@ -67,7 +66,7 @@
 		  				<c:if test="${c.clientType.id == 1}"><c:out value="Supplier"></c:out></c:if>
 		  				<c:if test="${c.clientType.id == 2}"><c:out value="Retailer"></c:out></c:if>
 		  			</td>
-		  			<td><input type="button" value="Edit!"></td> <!-- Need to make this...Ajax-y... -->
+		  			<td><button type="button" class="btn btn-primary" value="${c}" data-toggle="modal" data-target="#clientEditModal">Edit</button></td> <!-- Need to make this...Ajax-y... -->
 		  		</tr>
 		  		</c:forEach>
 			</table>
@@ -91,6 +90,7 @@
 	<!-- Modal -->
 	<div id="clientModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
+	
 	
 	    <!-- Modal content-->
 	    <div class="modal-content">
@@ -163,11 +163,99 @@
 	      </div>
 	    <div class="modal-footer">
         <input id="addClient" type="button"  value="Add" class="btn btn-primary" ></input>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
 	  </div>
 	</div>
+	
+
+		<!-- Modal for Updating and Deletion -->
+	<div id="clientEditModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit a Client</h4>
+	      </div>
+	      <div class="modal-body">
+	      <table id="modal-table">
+	      	<tr>
+	      		<td>Id:</td>
+	      		<td><c:out value="${c.id}"></c:out></td>
+	      	</tr>
+	        <tr>
+	        	<td>Client:</td>
+	        	<td><input id="clientName" type="text" class="form-control" name="clientName"><c:out value="${c.name}"></c:out></td>
+	        	
+	        </tr>
+	        <tr>
+	        	<td>Email:</td>
+	        	<td><input id="email" type="text" class="form-control" name="email"><c:out value="${c.email}"></c:out></td>
+	        </tr>
+	        <tr>
+	        	<td>Contact Name:</td>
+	        	<td><input id="contactName" type="text" class="form-control" name="contactName"><c:out value="${c.pocName}"></c:out></td>
+	        </tr>
+	        <tr>
+	        	<td>Phone:</td>
+	        	<td><input id="phone" type="text" class="form-control" name="Phone"></td>
+	        </tr>
+	        <tr>
+	        	<td>Fax:</td>
+	        	<td><input id="fax" type="text" class="form-control" name="fax"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 1:</td>
+	        	<td><input id="adLine1" type="text" class="form-control" name="adLine1"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 2:</td>
+	        	<td><input id="adLine2" type="text" class="form-control" name="adLine2"></td>
+	        </tr>
+	        <tr>
+	        	<td>City:</td>
+	        	<td><input id="city" type="text" class="form-control" name="city"></td>
+	        </tr>
+	        <tr>
+	        	<td>State:</td>
+	        	<td>
+	        		<select name="state" id="state" class="form-control" id="state">
+	        			<option selected disabled>Select a State</option>
+	        			<c:forEach var="s" items="${states}">
+	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
+	        			</c:forEach>
+	        		</select>
+	        	</td>
+	        </tr>
+	        <tr>
+	        	<td>Zip:</td>
+	        	<td><input id="zip" type="text" class="form-control" name="zip"></td>
+	        </tr>
+	        <tr>
+	        	<td>Type:</td>
+	        	<td>
+					<select name="type" id="type" class="form-control">
+						<option selected disabled>Select Client Type</option>
+						<c:forEach var="t" items="${clientTypes}">
+						<option value="${t.id}"><c:out value="${t.clientList}"></c:out></option>
+						</c:forEach>
+					</select>
+				</td>
+	        </tr>
+	        </table>
+	      </div>
+	    <div class="modal-footer">
+        <input id="editClient" type="button"  value="Update" class="btn btn-success" ></input>
+        <input id="deleteClient" type="button"  value="Delete" class="btn btn-danger" ></input>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+      	</div>
+	    </div>
+	  </div>
+	</div>
+	
 </body>
 
 <script type="text/javascript">

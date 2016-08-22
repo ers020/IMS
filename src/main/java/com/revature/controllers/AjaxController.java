@@ -62,7 +62,6 @@ public class AjaxController
 		//		and is parsed on this side, to get all of the items needed.
 		//		
 		
-		System.out.println(client.getAddLine1());
 		State state = bl.getState(Integer.parseInt(client.getStateId()));
 		Address address = new Address(client.getAddLine1(), client.getAddLine2(), 
 			client.getCity(), state, client.getZip());
