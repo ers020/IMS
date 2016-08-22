@@ -3,7 +3,19 @@ package com.revature.beans;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 //THIS BEAN INITIALIZES NEW CLIENTS, PER CLIENT TABLE
 
@@ -44,6 +56,63 @@ public class Client
 
 	@OneToMany(mappedBy="client", fetch=FetchType.EAGER)
 	Set<Order> clientOrders = new HashSet<Order>();
+
+	//////////////////////////////////////////////////////////
+	private String addLine1;
+	private String addLine2;
+	private String city;
+	private String stateId;
+	private String zip;
+	private String clientTypeId;
+	
+	
+	public String getAddLine1() {
+		return addLine1;
+	}
+
+	public void setAddLine1(String addLine1) {
+		this.addLine1 = addLine1;
+	}
+
+	public String getAddLine2() {
+		return addLine2;
+	}
+
+	public void setAddLine2(String addLine2) {
+		this.addLine2 = addLine2;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(String stateId) {
+		this.stateId = stateId;
+	}
+
+	public String getZip() {
+		return zip;
+	}
+
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
+
+	public String getClientTypeId() {
+		return clientTypeId;
+	}
+
+	public void setClientTypeId(String clientTypeId) {
+		this.clientTypeId = clientTypeId;
+	}
 
 	public int getId()
 	{
@@ -151,6 +220,18 @@ public class Client
 		super();
 	}
 	
+	public Client(String name, String email, String pocName, String phone, String fax, Address address,
+			ClientType clientType) {
+			super();
+			this.name = name;
+			this.email = email;
+			this.pocName = pocName;
+			this.phone = phone;
+			this.fax = fax;
+			this.address = address;
+			this.clientType = clientType;
+		}
+	
 	
 	public Client(int id, String name, String email, String pocName, String phone, String fax, Address address,
 		ClientType clientType) {
@@ -181,6 +262,23 @@ public class Client
 	}
 
 	
+
+	public Client(String name, String email, String pocName, String phone, String fax,
+			 String addLine1, String addLine2, String city, String stateId,
+			String zip, String clientTypeId) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.pocName = pocName;
+		this.phone = phone;
+		this.fax = fax;
+		this.addLine1 = addLine1;
+		this.addLine2 = addLine2;
+		this.city = city;
+		this.stateId = stateId;
+		this.zip = zip;
+		this.clientTypeId = clientTypeId;
+	}
 
 	@Override
 	public String toString()

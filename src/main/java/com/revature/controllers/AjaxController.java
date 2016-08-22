@@ -3,11 +3,10 @@ package com.revature.controllers;
 
 import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,14 +22,13 @@ import com.revature.dataAccess.BusinessLayer;
 @Controller
 public class AjaxController 
 {
-	@Autowired
-	private ServletContext servletContext; //instance var
+	//@Autowired
+	//private ServletContext servletContext; //instance var
 
 	private BusinessLayer bl = new BusinessLayer();
 	/*private List<Client> clients = new Vector<Client>();
 	private List<Client> invoices = new Vector<Client>();
 	private List<Client> products = new Vector<Client>();*/
-	
 	
 	private List<Client> clients = bl.getAllClients();
 	private List<Invoice> invoices = bl.getInvoices();
@@ -46,6 +44,7 @@ public class AjaxController
 	
 	@RequestMapping(value="clientsPage.do", method=RequestMethod.GET)
 	public String clientPage(HttpServletRequest req){
+
 		req.setAttribute("clients",clients); // commandName=this blank object
 		List<State> states = bl.getAllStates();
 		req.setAttribute("states", states);
@@ -57,22 +56,26 @@ public class AjaxController
 	
 	@RequestMapping(value="insertClient.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String addClient(HttpServletRequest req, HttpServletRequest resp){
+	public String addClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Client client){
 		
-		System.out.println(req.getParameter("id"));
-		State state = bl.getState(Integer.parseInt(req.getParameter("id")));
-		Address address = new Address(1, req.getParameter("line1"), req.getParameter("line2"), 
-				req.getParameter("city"), state, req.getParameter("zip"));
-		ClientType clientType = bl.getClientType(Integer.parseInt(req.getParameter("tId")));
-		Client client = new Client(1, req.getParameter("name"), req.getParameter("email"),
-				req.getParameter("pocName"), req.getParameter("phone"), req.getParameter("fax"),
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+		System.out.println(client.getAddLine1());
+		State state = bl.getState(Integer.parseInt(client.getStateId()));
+		Address address = new Address(client.getAddLine1(), client.getAddLine2(), 
+			client.getCity(), state, client.getZip());
+		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
+		Client newClient = new Client(client.getName(), client.getEmail(),
+				client.getPocName(), client.getPhone(), client.getFax(),
 				address, clientType);
-		bl.addClient(client);
+		bl.addClient(newClient);
 		clients = bl.getAllClients();
 		req.setAttribute("clients",clients); // commandName=this blank object
 		List<State> states = bl.getAllStates();
 		req.setAttribute("states", states);
-		
+	
 		List<ClientType> clientTypes = bl.getClientTypes();
 		req.setAttribute("clientTypes", clientTypes);
 		

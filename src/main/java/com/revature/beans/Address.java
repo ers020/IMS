@@ -98,6 +98,15 @@ public class Address
 		super();
 	}
 
+	public Address(String line1, String line2, String city, State state, String zip){
+		super();
+		this.line1 = line1;
+		this.line2 = line2;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+	}
+	
 	public Address(int id, String line1, String line2, String city, State state, String zip)
 	{
 		super();

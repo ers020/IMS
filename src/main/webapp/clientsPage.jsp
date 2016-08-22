@@ -4,49 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript">
 
-		function openModal()
-		{
-			$("#clientModal").modal()
-		}
-
-	$(document).ready(function(){
-		$("#addClient").click(function(){
-			var clientName = $("#clientName").val();
-			var email = $("#email").val();
-			var contactName = $("#contactName").val();
-			var phone = $("#phone").val();
-			var fax = $("#fax").val();
-			var adLine1 = $("#adLine1").val();
-			var adLine2 = $("#adLine2").val();
-			var city = $("#city").val();
-			var stateId = $("#state").val();
-			var zip = $("#zip").val();
-			var typeId = $("#type").val();
-			var client 
-			$.ajax({
-			// contentType application/json
-			headers: {          
-    			"Content-Type": "application/json"
-    		},
-			url: "http://localhost:9001/ims/insertClient.do",
-			method: "POST",
-			data: JSON.stringify({
-				name : clientName, email : email, 
-				pocName : contactName, phone : phone,
-				fax : fax, line1 : adLine1, line2 : adLine2,
-				id : stateId, city : city, zip: zip ,tId : typeId
-			}),
-			success: function(){
-				alert("Added Client successfully!");
-			}
-		});
-	});
-	
-});
-
-</script>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -55,7 +13,7 @@
 	
 	<!-- MODAL BOOTSTRAP -->
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
@@ -66,7 +24,7 @@
 	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
 	
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	
 	
 	<!-- CSS Google Text -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet" type="text/css">
@@ -204,10 +162,54 @@
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <button id="addClient" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+        <input id="addClient" type="button"  value="Add" class="btn btn-primary" ></input>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       	</div>
 	    </div>
 	  </div>
 	</div>
 </body>
+
+<script type="text/javascript">
+
+		function openModal()
+		{
+			jQuery("#clientModal").modal()
+		}
+
+	jQuery(document).ready(function(){
+		jQuery("#addClient").click(function(){
+			var clientName = jQuery("#clientName").val();
+			var email = jQuery("#email").val();
+			var contactName = jQuery("#contactName").val();
+			var phone = jQuery("#phone").val();
+			var fax = jQuery("#fax").val();
+			var adLine1 = jQuery("#adLine1").val();
+			var adLine2 = jQuery("#adLine2").val();
+			var city = jQuery("#city").val();
+			var stateId = jQuery("#state").val();
+			var zip = jQuery("#zip").val();
+			var typeId = jQuery("#type").val();
+			jQuery.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/IMS/insertClient.do",
+			method: "POST",
+			data: JSON.stringify({
+				name : clientName, email : email, 
+				pocName : contactName, phone : phone,
+				fax : fax, addLine1 : adLine1, addLine2 : adLine2,
+				stateId : stateId, city : city, zip: zip, clientTypeId : typeId
+			}),
+			success: function(){
+				alert("Added Client successfully!");
+			}
+		});
+	});
+	
+});
+
+</script>
 </html>

@@ -15,8 +15,12 @@ public class Test
 	//private static Logger log = Logger.getRootLogger();
 	
 
-	public static void main(String[] args) throws FileNotFoundException 
-	{	
+	public static void main(String[] args) 
+	{		
+		DataLayerAccess dla = new DataLayerAccess();
+		
+		List<Client> client = dla.getAllClients();
+		System.out.println(client);
 		
 	}
 	
