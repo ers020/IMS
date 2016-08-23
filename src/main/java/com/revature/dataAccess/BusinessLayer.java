@@ -2,6 +2,7 @@ package com.revature.dataAccess;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.revature.beans.Address;
 import com.revature.beans.CategoryDescription;
@@ -73,8 +74,8 @@ public class BusinessLayer {
 	///////////////////////// BEGIN ADD PRODUCTS //////////////////////////////////////////////
 
 	//get the Category Description based on the Drop Down list
-	public List<CategoryDescription> getCatDesc(String categoryChoice){
-		List<CategoryDescription> catDesc = dla.getCatChoice(categoryChoice);
+	public Set<CategoryDescription> getCatDesc(int catDescId){
+		Set<CategoryDescription> catDesc = dla.getCatChoice(catDescId);
 		
 		return catDesc;
 	}
@@ -208,6 +209,34 @@ public class BusinessLayer {
 		
 		return states;
 	}
+
+	public List<CategoryDescription> getAllCatDesc() {
+		List<CategoryDescription> catDesc = dla.getAllCatDesc();
+		return catDesc;
+	}
+
+	public Set<Product> getProductByName(String name) {
+		Set<Product> madeProduct = dla.getProductByName(name);
+		return madeProduct;
+	}
+
+	public void addCatDesc(CategoryDescription addCat) {
+		
+		dla.createObject(addCat);
+		
+	}
+
+	public CategoryDescription getCatDescById(int catDescId) {
+		CategoryDescription getCat = dla.getCatChoiceById(catDescId);
+		return getCat;
+	}
+
+	public void updateCatDesc(CategoryDescription addDescProd) {
+		dla.createObject(addDescProd);
+		
+	}
+
+	
 
 
 

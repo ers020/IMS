@@ -102,36 +102,36 @@
 	      <table id="modal-table">
 	        <tr>
 	        	<td>Client:</td>
-	        	<td><input id="clientName" type="text" class="form-control" name="clientName"></td>
+	        	<td><input required id="clientName" type="text" class="form-control" name="clientName"></td>
 	        	
 	        </tr>
 	        <tr>
 	        	<td>Email:</td>
-	        	<td><input id="email" type="text" class="form-control" name="email"></td>
+	        	<td><input required id="email" type="text" class="form-control" name="email"></td>
 	        </tr>
 	        <tr>
 	        	<td>Contact Name:</td>
-	        	<td><input id="contactName" type="text" class="form-control" name="contactName"></td>
+	        	<td><input required id="contactName" type="text" class="form-control" name="contactName"></td>
 	        </tr>
 	        <tr>
 	        	<td>Phone:</td>
-	        	<td><input id="phone" type="text" class="form-control" name="Phone"></td>
+	        	<td><input required id="phone" type="text" class="form-control" name="Phone"></td>
 	        </tr>
 	        <tr>
 	        	<td>Fax:</td>
-	        	<td><input id="fax" type="text" class="form-control" name="fax"></td>
+	        	<td><input required id="fax" type="text" class="form-control" name="fax"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 1:</td>
-	        	<td><input id="adLine1" type="text" class="form-control" name="adLine1"></td>
+	        	<td><input required id="adLine1" type="text" class="form-control" name="adLine1"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 2:</td>
-	        	<td><input id="adLine2" type="text" class="form-control" name="adLine2"></td>
+	        	<td><input required id="adLine2" type="text" class="form-control" name="adLine2"></td>
 	        </tr>
 	        <tr>
 	        	<td>City:</td>
-	        	<td><input id="city" type="text" class="form-control" name="city"></td>
+	        	<td><input required id="city" type="text" class="form-control" name="city"></td>
 	        </tr>
 	        <tr>
 	        	<td>State:</td>
@@ -146,7 +146,7 @@
 	        </tr>
 	        <tr>
 	        	<td>Zip:</td>
-	        	<td><input id="zip" type="text" class="form-control" name="zip"></td>
+	        	<td><input required id="zip" type="text" class="form-control" name="zip"></td>
 	        </tr>
 	        <tr>
 	        	<td>Type:</td>
@@ -184,46 +184,50 @@
 	      <table id="modal-table">
 	      	<tr>
 	      		<td>Id:</td>
-	      		<td><c:out value="${c.id}"></c:out></td>
+	      		<td id="eId"><c:out value="${eClient.id}"></c:out></td>
+	      	</tr>
+	      	<tr style="display: none">
+	      		<td>AddId:</td>
+	      		<td><input type="text" id="eAddId"></td>
 	      	</tr>
 	        <tr>
 	        	<td>Client:</td>
-	        	<td><input id="clientName" type="text" class="form-control" name="clientName"><c:out value="${c.name}"></c:out></td>
+	        	<td><input required id="eName" type="text" class="form-control" name="clientName"><c:out value="${eClient.name}"></c:out></td>
 	        	
 	        </tr>
 	        <tr>
 	        	<td>Email:</td>
-	        	<td><input id="email" type="text" class="form-control" name="email"><c:out value="${c.email}"></c:out></td>
+	        	<td><input required id="eEmail" type="text" class="form-control" name="email"><c:out value="${eClient.email}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>Contact Name:</td>
-	        	<td><input id="contactName" type="text" class="form-control" name="contactName"><c:out value="${c.pocName}"></c:out></td>
+	        	<td><input required id="eContactName" type="text" class="form-control" name="contactName"><c:out value="${eClient.pocName}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>Phone:</td>
-	        	<td><input id="phone" type="text" class="form-control" name="Phone"></td>
+	        	<td><input required id="ePhone" type="text" class="form-control" name="Phone"><c:out value="${eClient.phone}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>Fax:</td>
-	        	<td><input id="fax" type="text" class="form-control" name="fax"></td>
+	        	<td><input required id="eFax" type="text" class="form-control" name="fax"><c:out value="${eClient.fax}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 1:</td>
-	        	<td><input id="adLine1" type="text" class="form-control" name="adLine1"></td>
+	        	<td><input required id="eAdLine1" type="text" class="form-control" name="adLine1"><c:out value="${eClient.address.line1}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 2:</td>
-	        	<td><input id="adLine2" type="text" class="form-control" name="adLine2"></td>
+	        	<td><input required id="eAdLine2" type="text" class="form-control" name="adLine2"><c:out value="${eClient.address.line2}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>City:</td>
-	        	<td><input id="city" type="text" class="form-control" name="city"></td>
+	        	<td><input required id="eCity" type="text" class="form-control" name="city"><c:out value="${eClient.address.city}"></c:out></td>
 	        </tr>
 	        <tr>
 	        	<td>State:</td>
 	        	<td>
-	        		<select name="state" id="state" class="form-control" id="state">
-	        			<option selected disabled>Select a State</option>
+	        		<select name="eState" id="eState" class="form-control" id="state">
+	        			<option selected ><c:out value="${eClient.address.state.name}"></c:out></option>
 	        			<c:forEach var="s" items="${states}">
 	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
 	        			</c:forEach>
@@ -232,12 +236,12 @@
 	        </tr>
 	        <tr>
 	        	<td>Zip:</td>
-	        	<td><input id="zip" type="text" class="form-control" name="zip"></td>
+	        	<td><input required id="eZip" type="text" class="form-control" name="zip"></td>
 	        </tr>
 	        <tr>
 	        	<td>Type:</td>
 	        	<td>
-					<select name="type" id="type" class="form-control">
+					<select name="eType" id="eType" class="form-control">
 						<option selected disabled>Select Client Type</option>
 						<c:forEach var="t" items="${clientTypes}">
 						<option value="${t.id}"><c:out value="${t.clientList}"></c:out></option>
@@ -259,7 +263,42 @@
 </body>
 
 <script type="text/javascript">
-
+	
+	function getClient(cName)
+	{
+		var clientName = cName;
+		var eClient;
+		
+		$.get("http://localhost:9001/IMS/clientInfo.do?clientName=" + clientName, function(response){
+			eClient = response;
+			
+			$("#eId").text(eClient.id);
+			$("#eAddId").val(eClient.address.id);
+			$("#eName").val(eClient.name);
+			$("#eEmail").val(eClient.email);
+			$("#eContactName").val(eClient.pocName);
+			$("#ePhone").val(eClient.phone);
+			$("#eFax").val(eClient.fax);
+			$("#eAdLine1").val(eClient.address.line1);
+			$("#eAdLine2").val(eClient.address.line2);
+			$("#eCity").val(eClient.address.city);
+			$("#eState").val(eClient.address.state.id);
+			$("#eZip").val(eClient.address.zip);
+			$("#eType").val(eClient.clientType.id);
+			
+		});
+		
+		/*$.ajax({
+                type: "post",
+                url: "http://localhost:9001/IMS/clientInfo.do", //this is my servlet
+                data: JSON.stringify({clientName : clientName}),
+                success: function(msg)
+                {      
+                        alert("Editing person successfully!");
+                }
+            });*/
+	}
+	
 		function openModal()
 		{
 			jQuery("#clientModal").modal()
@@ -293,6 +332,64 @@
 			}),
 			success: function(){
 				alert("Added Client successfully!");
+			}
+		});
+	});
+	
+});
+
+jQuery(document).ready(function(){
+		jQuery("#editClient").click(function(){
+			var clientId = jQuery("#eId").text();
+			var addressId = jQuery("#eAddId").val();
+			var clientName = jQuery("#eName").val();
+			var email = jQuery("#eEmail").val();
+			var contactName = jQuery("#eContactName").val();
+			var phone = jQuery("#ePhone").val();
+			var fax = jQuery("#eFax").val();
+			var adLine1 = jQuery("#eAdLine1").val();
+			var adLine2 = jQuery("#eAdLine2").val();
+			var city = jQuery("#eCity").val();
+			var stateId = jQuery("#eState").val();
+			var zip = jQuery("#eZip").val();
+			var typeId = jQuery("#eType").val();
+			
+			jQuery.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/IMS/editClient.do",
+			method: "POST",
+			data: JSON.stringify({
+				strId : clientId, strAddId : addressId, name : clientName, email : email, 
+				pocName : contactName, phone : phone,
+				fax : fax, addLine1 : adLine1, addLine2 : adLine2,
+				stateId : stateId, city : city, zip : zip, clientTypeId : typeId
+			}),
+			success: function(){
+				alert("Edited Client successfully!");
+			}
+		});
+	});
+	
+});
+
+	jQuery(document).ready(function(){
+		jQuery("#deleteClient").click(function(){
+			var clientName = jQuery("#eName").val();
+			jQuery.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/IMS/deleteClient.do",
+			method: "POST",
+			data: JSON.stringify({
+				delName : clientName
+			}),
+			success: function(){
+				alert("Deleted Client successfully!");
 			}
 		});
 	});

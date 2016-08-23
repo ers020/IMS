@@ -1,7 +1,9 @@
 package com.revature.dataAccess;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -68,6 +70,19 @@ public class ManagementDAO
 		Client results = null;
 		
 		Criteria criteria = session.createCriteria(Client.class).add(Restrictions.eq("name", name));
+
+		@SuppressWarnings("unchecked")
+		List<Client> clientInfo = criteria.list();
+		
+		results = clientInfo.get(0);	
+		return results;
+	}
+	
+	public Client getClient(int id)
+	{
+		Client results = null;
+		
+		Criteria criteria = session.createCriteria(Client.class).add(Restrictions.eq("id", id));
 
 		@SuppressWarnings("unchecked")
 		List<Client> clientInfo = criteria.list();
@@ -191,14 +206,14 @@ public class ManagementDAO
 	
 	///////////////////////// ADD NEW ITEMS/PRODUCTS ///////////////////////////////
 	
-	public List<CategoryDescription> getCatChoice(String categoryChoice) 
+	public Set<CategoryDescription> getCatChoice(int catDescId) 
 	{
-		String hql = "FROM CategoryDescription WHERE description =:description";
+		String hql = "FROM CategoryDescription WHERE id =:id";
 		Query query = session.createQuery(hql);
-		query.setParameter("description", categoryChoice);
+		query.setParameter("id", catDescId);
 
 		@SuppressWarnings("unchecked")
-		List<CategoryDescription> catDesc = query.list();
+		Set<CategoryDescription> catDesc = new HashSet<CategoryDescription>(query.list());
 		
 		return catDesc;
 	}
@@ -280,6 +295,36 @@ public class ManagementDAO
 		List<State> states = query.list();
 		return states;
 	}
+
+	public List<CategoryDescription> getAllCatDesc() {
+		
+		String hql = "FROM CategoryDescription";
+		Query query = session.createQuery(hql);
+		@SuppressWarnings("unchecked")
+		List<CategoryDescription> catDesc = query.list();
+		return catDesc;
+	}
+
+	public Set<Product> getProductByName(String name) {
+		String hql ="FROM Product WHERE name =:name";
+		Query query = session.createQuery(hql);
+		query.setParameter("name", name);
+		Set<Product> madeProduct = new HashSet<Product>();
+		madeProduct.add((Product) query.uniqueResult());
+		return madeProduct;
+	}
+
+	public CategoryDescription getCatChoiceById(int catDescId) {
+		String hql ="FROM CategoryDescription WHERE id =:id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", catDescId);
+		CategoryDescription cd = (CategoryDescription) query.uniqueResult();
+		return cd;
+	}
+
+
+
+	
 
 	///////////////////////// END ADD CLIENT SECTION ///////////////////////////////////////
 

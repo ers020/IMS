@@ -58,14 +58,42 @@ public class Client
 	Set<Order> clientOrders = new HashSet<Order>();
 
 	//////////////////////////////////////////////////////////
+	private String strId;
+	private String strAddId;
 	private String addLine1;
 	private String addLine2;
 	private String city;
 	private String stateId;
 	private String zip;
 	private String clientTypeId;
+	private String delName;
 	
 	
+	
+	public String getStrId() {
+		return strId;
+	}
+
+	public void setStrId(String strId) {
+		this.strId = strId;
+	}
+
+	public String getStrAddId() {
+		return strAddId;
+	}
+
+	public void setStrAddId(String strAddId) {
+		this.strAddId = strAddId;
+	}
+
+	public String getDelName() {
+		return delName;
+	}
+
+	public void setDelName(String delName) {
+		this.delName = delName;
+	}
+
 	public String getAddLine1() {
 		return addLine1;
 	}
@@ -279,6 +307,28 @@ public class Client
 		this.zip = zip;
 		this.clientTypeId = clientTypeId;
 	}
+	
+	public Client(String name, String email, String pocName, String phone, String fax,
+			String strId, String addLine1, String addLine2, String city, String stateId, String strAddId, String zip,
+			String clientTypeId)
+	{
+		super();
+		this.strId = strId;
+		this.name = name;
+		this.email = email;
+		this.pocName = pocName;
+		this.phone = phone;
+		this.fax = fax;
+		this.addLine1 = addLine1;
+		this.addLine2 = addLine2;
+		this.city = city;
+		this.stateId = stateId;
+		this.strAddId = strAddId;
+		this.zip = zip;
+		this.clientTypeId = clientTypeId;
+	}
+	
+	
 
 	@Override
 	public String toString()

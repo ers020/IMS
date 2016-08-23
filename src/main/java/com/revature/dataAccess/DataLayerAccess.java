@@ -2,6 +2,7 @@ package com.revature.dataAccess;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
@@ -142,6 +143,22 @@ public class DataLayerAccess
 	
 	public Client getClientByName(String parameter) {
 		
+		Transaction tx = session.beginTransaction();
+		
+		try{
+			Client client = dao.getClient(parameter);
+			tx.commit();
+			return client;
+		} catch(Throwable t)
+		{
+			tx.rollback();
+			return null;
+		}
+		
+	}
+	
+	public Client getClientById(int parameter)
+	{	
 		Transaction tx = session.beginTransaction();
 		
 		try{
@@ -306,11 +323,11 @@ public class DataLayerAccess
 	
 	///////////////////////// ADD NEW ITEMS/PRODUCTS ///////////////////////////////
 	
-	public List<CategoryDescription> getCatChoice(String categoryChoice) {
+	public Set<CategoryDescription> getCatChoice(int catDescId) {
 	//	log.info("Get list of Category Description for the type of category.");
 		Transaction tx = session.beginTransaction();
 		try{
-			List<CategoryDescription> catDesc = dao.getCatChoice(categoryChoice);
+			Set<CategoryDescription> catDesc = dao.getCatChoice(catDescId);
 			tx.commit();
 			return catDesc;
 		}catch(Throwable t){
@@ -379,6 +396,27 @@ public class DataLayerAccess
 		List<State> states = dao.getAllStates();
 		return states;
 	}
+	public List<CategoryDescription> getAllCatDesc() {
+		Transaction tx = session.beginTransaction();
+		try{
+			List<CategoryDescription> catDesc = dao.getAllCatDesc();
+			tx.commit();
+			return catDesc;
+		}catch (Throwable t){
+			tx.rollback();
+			return null;
+		}
+	
+	}
+	public Set<Product> getProductByName(String name) {
+		Set<Product> madeProduct = dao.getProductByName(name);
+		return madeProduct;
+	}
+	public CategoryDescription getCatChoiceById(int catDescId) {
+		CategoryDescription getCat = dao.getCatChoiceById(catDescId);
+		return getCat;
+	}
+
 	
 	
 }

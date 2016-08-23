@@ -1,7 +1,10 @@
 
 package com.revature.controllers;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.beans.Address;
+import com.revature.beans.CategoryDescription;
 import com.revature.beans.Client;
 import com.revature.beans.ClientType;
 import com.revature.beans.Invoice;
@@ -63,8 +67,8 @@ public class AjaxController
 		//		
 		
 		State state = bl.getState(Integer.parseInt(client.getStateId()));
-		Address address = new Address(client.getAddLine1(), client.getAddLine2(), 
-			client.getCity(), state, client.getZip());
+		Address address = new Address(client.getAddLine1(), client.getAddLine2(),
+				client.getCity(), state, client.getZip());
 		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
 		Client newClient = new Client(client.getName(), client.getEmail(),
 				client.getPocName(), client.getPhone(), client.getFax(),
@@ -81,6 +85,78 @@ public class AjaxController
 		return "clientsPage";
 	}
 	
+	@RequestMapping(value="editClient.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Client client){
+		
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+		System.out.println(client.getStrAddId());
+
+		State state = bl.getState(Integer.parseInt(client.getStateId()));
+		Address address = new Address(Integer.parseInt(client.getStrAddId()), client.getAddLine1(), client.getAddLine2(), 
+			client.getCity(), state, client.getZip());
+		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
+		Client newClient = new Client(Integer.parseInt(client.getStrId()), client.getName(), client.getEmail(),
+				client.getPocName(), client.getPhone(), client.getFax(),
+				address, clientType);
+		bl.addClient(newClient);
+		clients = bl.getAllClients();
+		req.setAttribute("clients",clients); // commandName=this blank object
+		List<State> states = bl.getAllStates();
+		req.setAttribute("states", states);
+	
+		List<ClientType> clientTypes = bl.getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		
+		return "clientsPage";
+	}
+	
+	@RequestMapping(value="deleteClient.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Client client)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+
+		String clientName = client.getDelName();
+		
+		System.out.println(clientName);
+		
+		Client newClient = bl.getClient(clientName);
+
+		bl.deleteClient(newClient);
+		
+		clients = bl.getAllClients();
+		req.setAttribute("clients",clients); // commandName=this blank object
+		List<State> states = bl.getAllStates();
+		req.setAttribute("states", states);
+	
+		List<ClientType> clientTypes = bl.getClientTypes();
+		req.setAttribute("clientTypes", clientTypes);
+		
+		return "clientsPage";
+	}
+	
+//	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
+//	@ResponseBody
+//	public Client getClientInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String clientName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
+//	{
+//		System.out.println(clientName);
+//		
+//		Client info = bl.getClient(clientName);
+//		
+//		System.out.println(info.getName());
+
+		/*request.setAttribute("eClient", info);
+
+		response.sendRedirect("http://localhost:9001/IMS/clientInfo.do");*/
+		
+//		return info;
+//	}
 /*	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
@@ -224,14 +300,55 @@ public class AjaxController
 	 * ==================================================================
 	 */
 
-	
-/*	public String getProducts(HttpServletRequest req)
+	@RequestMapping(value="productPage.do", method=RequestMethod.GET)
+	public String getProducts(HttpServletRequest req)
 	{
 		req.setAttribute("products",products); // commandName=this blank object
+		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+		req.setAttribute("catDesc", catDesc);
+		
+		return "productPage";
+	}
+	
+	@RequestMapping(value="insertProduct.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String addProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
+		
+		
+		
+//		Set<CategoryDescription> getCatDesc = bl.getCatDesc(Integer.parseInt(product.getCatDescId()));
+//		Product newProduct = new Product(product.getName(), 
+//				product.getsName(), product.getDescription(), Double.parseDouble(product.getStrCost()),
+//				product.getStrSize(), Integer.parseInt(product.getStrStock()),
+//				Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
+//				getCatDesc);
+//		
+//		Set<Product> prodList = new HashSet<Product>();
+//		prodList.add(newProduct);
+//		CategoryDescription getCat = bl.getCatDescById(Integer.parseInt(product.getCatDescId()));
+//		
+//		
+//		CategoryDescription addDescProd = new CategoryDescription(getCat.getId(), getCat.getDescription(),prodList);
+//		
+//		bl.updateCatDesc(addDescProd);
+//		
+//		products = bl.getAllProducts();
+//		req.setAttribute("products",products); // commandName=this blank object
+//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+//		req.setAttribute("catDesc", catDesc);
+		
+//		clients = bl.getAllClients();
+//		req.setAttribute("clients",clients); // commandName=this blank object
+//		List<State> states = bl.getAllStates();
+//		req.setAttribute("states", states);
+//	
+//		List<ClientType> clientTypes = bl.getClientTypes();
+//		req.setAttribute("clientTypes", clientTypes);
+		
 		return "productPage";
 	}
 		
-	public List<Product> getProductsByClient(
+/*	public List<Product> getProductsByClient(
 			HttpServletRequest request,
 			HttpServletResponse response)
 	{

@@ -65,6 +65,63 @@ public class Product
 			inverseJoinColumns=@JoinColumn(name="CATEGORY_ID"))
 	private Set<CategoryDescription> categoryDesc;
 
+	//////////////////////////////////////////////////////
+	private String strCost;
+	private String strSize;
+	private String strStock;
+	private String strPreQuantity;
+	private String strRetailPrice;
+	private String catDescId[];
+	
+	
+	public String getStrCost() {
+		return strCost;
+	}
+
+	public void setStrCost(String strCost) {
+		this.strCost = strCost;
+	}
+
+	public String getStrSize() {
+		return strSize;
+	}
+
+	public void setStrSize(String strSize) {
+		this.strSize = strSize;
+	}
+
+	public String getStrStock() {
+		return strStock;
+	}
+
+	public void setStrStock(String strStock) {
+		this.strStock = strStock;
+	}
+
+	public String getStrPreQuantity() {
+		return strPreQuantity;
+	}
+
+	public void setStrPreQuantity(String strPreQuantity) {
+		this.strPreQuantity = strPreQuantity;
+	}
+
+	public String getStrRetailPrice() {
+		return strRetailPrice;
+	}
+
+	public void setStrRetailPrice(String strRetailPrice) {
+		this.strRetailPrice = strRetailPrice;
+	}
+
+	public String[] getCatDescId() {
+		return catDescId;
+	}
+
+	public void setCatDescId(String catDescId[]) {
+		this.catDescId = catDescId;
+	}
+
 	public int getId()
 	{
 		return id;
@@ -195,11 +252,39 @@ public class Product
 	{
 		super();
 	}
+	
+	public Product(String name, String sName, String description, String strCost, String strSize, String strStock,
+			String strPreQuantity, String strRetailPrice, String[] catDescId) {
+		super();
+		this.name = name;
+		this.sName = sName;
+		this.description = description;
+		this.strCost = strCost;
+		this.strSize = strSize;
+		this.strStock = strStock;
+		this.strPreQuantity = strPreQuantity;
+		this.strRetailPrice = strRetailPrice;
+		this.catDescId = catDescId;
+	}
 
 	public Product(int id, String name, String sName, String description, double cost, String size, int stock,
 			int quantity, double msrp, Set<CategoryDescription> categoryDesc) {
 		super();
 		this.id = id;
+		this.name = name;
+		this.sName = sName;
+		this.description = description;
+		this.cost = cost;
+		this.size = size;
+		this.stock = stock;
+		this.quantity = quantity;
+		this.msrp = msrp;
+		this.categoryDesc = categoryDesc;
+	}
+	
+	public Product(String name, String sName, String description, double cost, String size, int stock,
+			int quantity, double msrp, Set<CategoryDescription> categoryDesc) {
+		super();
 		this.name = name;
 		this.sName = sName;
 		this.description = description;
@@ -227,6 +312,10 @@ public class Product
 		this.image = image;
 		this.categoryDesc = categoryDesc;
 	}
+
+	
+	
+	
 
 	@Override
 	public String toString()
