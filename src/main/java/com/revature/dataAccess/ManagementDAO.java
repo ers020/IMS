@@ -322,6 +322,14 @@ public class ManagementDAO
 		return cd;
 	}
 
+	public Product getProduct(String productName) {
+		String hql ="FROM Product WHERE name =:name";
+		Query query = session.createQuery(hql);
+		query.setParameter("name", productName);
+		Product product = (Product) query.uniqueResult();
+		return product;
+	}
+
 
 
 	

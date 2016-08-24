@@ -2,16 +2,19 @@
 package com.revature.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.revature.beans.Address;
@@ -141,22 +144,18 @@ public class AjaxController
 		return "clientsPage";
 	}
 	
-//	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
-//	@ResponseBody
-//	public Client getClientInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String clientName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
-//	{
-//		System.out.println(clientName);
-//		
-//		Client info = bl.getClient(clientName);
-//		
-//		System.out.println(info.getName());
+	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
+	@ResponseBody
+	public Client getClientInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String clientName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
+	{
+		Client info = bl.getClient(clientName);
 
 		/*request.setAttribute("eClient", info);
 
 		response.sendRedirect("http://localhost:9001/IMS/clientInfo.do");*/
 		
-//		return info;
-//	}
+		return info;
+	}
 /*	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
@@ -314,28 +313,49 @@ public class AjaxController
 	@ResponseBody
 	public String addProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
+//		String[] seeThem = product.getCatDescId();
+//		for(int x=0; x < seeThem.length; x++){
+//			
+//			System.out.println(seeThem[x]);
+//		}
 		
 		
-//		Set<CategoryDescription> getCatDesc = bl.getCatDesc(Integer.parseInt(product.getCatDescId()));
-//		Product newProduct = new Product(product.getName(), 
-//				product.getsName(), product.getDescription(), Double.parseDouble(product.getStrCost()),
-//				product.getStrSize(), Integer.parseInt(product.getStrStock()),
-//				Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
-//				getCatDesc);
-//		
-//		Set<Product> prodList = new HashSet<Product>();
-//		prodList.add(newProduct);
-//		CategoryDescription getCat = bl.getCatDescById(Integer.parseInt(product.getCatDescId()));
-//		
-//		
-//		CategoryDescription addDescProd = new CategoryDescription(getCat.getId(), getCat.getDescription(),prodList);
-//		
-//		bl.updateCatDesc(addDescProd);
-//		
-//		products = bl.getAllProducts();
-//		req.setAttribute("products",products); // commandName=this blank object
-//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
-//		req.setAttribute("catDesc", catDesc);
+		//do Product
+		Set<CategoryDescription> descOptions = new HashSet<CategoryDescription>();
+		//for future use, because Sets are a pain to step through
+		List<CategoryDescription> descFuture = new ArrayList<CategoryDescription>();
+		String[] descList = product.getCatDescId();
+		
+		for (int x = 0; x < descList.length; x++){
+			descOptions.add(bl.getCatDescById(Integer.parseInt(descList[x])));
+			descFuture.add(bl.getCatDescById(Integer.parseInt(descList[x])));
+		}
+		
+		//get everything set for product
+		Product newProduct = new Product(product.getName(), product.getsName(),
+				product.getDescription(), Double.parseDouble(product.getStrCost()), 
+				product.getStrSize(), Integer.parseInt(product.getStrStock()), 
+				Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
+				descOptions);
+		
+		//save it
+		bl.addProduct(newProduct);
+		
+		//grab it
+		Set<Product> savedProduct = bl.getProductByName(product.getName());
+		
+		//Do Categories
+		for(int x = 0; x < descFuture.size(); x++)
+		{
+			CategoryDescription temp = descFuture.get(x);
+			CategoryDescription saveCD = new CategoryDescription(temp.getId(), temp.getDescription(), savedProduct);
+			bl.updateCatDesc(saveCD);
+		}
+		
+		products = bl.getAllProducts();
+		req.setAttribute("products",products); // commandName=this blank object
+		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+		req.setAttribute("catDesc", catDesc);
 		
 //		clients = bl.getAllClients();
 //		req.setAttribute("clients",clients); // commandName=this blank object
@@ -347,6 +367,22 @@ public class AjaxController
 		
 		return "productPage";
 	}
+	
+	@RequestMapping(value="prouctInfo.do", method=RequestMethod.GET)
+	@ResponseBody
+	public Product getProductInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String productName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
+	{
+		
+		Product info = bl.getProduct(productName);
+		//Client info = bl.getClient(clientName);
+
+		/*request.setAttribute("eClient", info);
+
+		response.sendRedirect("http://localhost:9001/IMS/clientInfo.do");*/
+		
+		return info;
+	}
+	
 		
 /*	public List<Product> getProductsByClient(
 			HttpServletRequest request,

@@ -416,6 +416,10 @@ public class DataLayerAccess
 		CategoryDescription getCat = dao.getCatChoiceById(catDescId);
 		return getCat;
 	}
+	public Product getProduct(String productName) {
+		Product product = dao.getProduct(productName);
+		return product;
+	}
 
 	
 	

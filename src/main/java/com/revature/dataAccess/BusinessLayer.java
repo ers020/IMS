@@ -236,6 +236,11 @@ public class BusinessLayer {
 		
 	}
 
+	public Product getProduct(String productName) {
+		Product product = dla.getProduct(productName);
+		return null;
+	}
+
 	
 
 

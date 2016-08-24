@@ -146,9 +146,126 @@
 	  </div>
 	</div>	
 	
+	
+			<!-- Modal for Updating and Deletion -->
+	<div id="clientEditModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Edit a Client</h4>
+	      </div>
+	      <div class="modal-body">
+	      <table id="modal-table">
+	      	<tr>
+	      		<td>Id:</td>
+	      		<td id="eId"></td>
+	      	</tr>
+	      	<tr style="display: none">
+	      		<td>AddId:</td>
+	      		<td><input type="text" id="eAddId"></td>
+	      	</tr>
+	        <tr>
+	        	<td>Client:</td>
+	        	<td><input required id="eName" type="text" class="form-control" name="clientName"></td>
+	        	
+	        </tr>
+	        <tr>
+	        	<td>Email:</td>
+	        	<td><input required id="eEmail" type="text" class="form-control" name="email"></td>
+	        </tr>
+	        <tr>
+	        	<td>Contact Name:</td>
+	        	<td><input required id="eContactName" type="text" class="form-control" name="contactName"></td>
+	        </tr>
+	        <tr>
+	        	<td>Phone:</td>
+	        	<td><input required id="ePhone" type="text" class="form-control" name="Phone"></td>
+	        </tr>
+	        <tr>
+	        	<td>Fax:</td>
+	        	<td><input required id="eFax" type="text" class="form-control" name="fax"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 1:</td>
+	        	<td><input required id="eAdLine1" type="text" class="form-control" name="adLine1"></td>
+	        </tr>
+	        <tr>
+	        	<td>Address Line 2:</td>
+	        	<td><input required id="eAdLine2" type="text" class="form-control" name="adLine2"></td>
+	        </tr>
+	        <tr>
+	        	<td>City:</td>
+	        	<td><input required id="eCity" type="text" class="form-control" name="city"></td>
+	        </tr>
+	        <tr>
+	        	<td>State:</td>
+	        	<td>
+	        		<select name="eState" id="eState" class="form-control" id="state">
+	        			<option selected >Select A State</option>
+	        			<c:forEach var="s" items="${states}">
+	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
+	        			</c:forEach>
+	        		</select>
+	        	</td>
+	        </tr>
+	        <tr>
+	        	<td>Zip:</td>
+	        	<td><input required id="eZip" type="text" class="form-control" name="zip"></td>
+	        </tr>
+	        <tr>
+	        	<td>Type:</td>
+	        	<td>
+					<select name="eType" id="eType" class="form-control">
+						<option selected disabled>Select Client Type</option>
+						<c:forEach var="t" items="${clientTypes}">
+						<option value="${t.id}"><c:out value="${t.clientList}"></c:out></option>
+						</c:forEach>
+					</select>
+				</td>
+	        </tr>
+	        </table>
+	      </div>
+	    <div class="modal-footer">
+        <input id="editClient" type="button"  value="Update" class="btn btn-success" ></input>
+        <input id="deleteClient" type="button"  value="Delete" class="btn btn-danger" ></input>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+      	</div>
+	    </div>
+	  </div>
+	</div>
+	
 </body>
 
 <script type="text/javascript">
+
+function getProduct(pName)
+	{
+		var productName = pName;
+		var eProduct;
+		
+		$.get("http://localhost:9001/IMS/clientInfo.do?productName=" + productName, function(response){
+			eProduct = response;
+			
+			$("#eId").text(eProuct.id);
+		/*	$("#eAddId").val(eClient.address.id);
+			$("#eName").val(eClient.name);
+			$("#eEmail").val(eClient.email);
+			$("#eContactName").val(eClient.pocName);
+			$("#ePhone").val(eClient.phone);
+			$("#eFax").val(eClient.fax);
+			$("#eAdLine1").val(eClient.address.line1);
+			$("#eAdLine2").val(eClient.address.line2);
+			$("#eCity").val(eClient.address.city);
+			$("#eState").val(eClient.address.state.id);
+			$("#eZip").val(eClient.address.zip);
+			$("#eType").val(eClient.clientType.id);*/
+			
+		});
+
+	}
 
 		function openModal()
 		{
@@ -165,7 +282,7 @@
 			var stock = jQuery("#stock").val();
 			var quantity = jQuery("#quantity").val();
 			var retail = jQuery("#retail").val();
-			var catDesc = jQuery("#catDesc[]").val();
+			var catDesc = jQuery("#catDesc").val();
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
@@ -186,7 +303,63 @@
 	});
 	
 });
+	jQuery(document).ready(function(){
+		jQuery("#editProduct").click(function(){
+			var clientId = jQuery("#eId").text();
+			var addressId = jQuery("#eAddId").val();
+			var clientName = jQuery("#eName").val();
+			var email = jQuery("#eEmail").val();
+			var contactName = jQuery("#eContactName").val();
+			var phone = jQuery("#ePhone").val();
+			var fax = jQuery("#eFax").val();
+			var adLine1 = jQuery("#eAdLine1").val();
+			var adLine2 = jQuery("#eAdLine2").val();
+			var city = jQuery("#eCity").val();
+			var stateId = jQuery("#eState").val();
+			var zip = jQuery("#eZip").val();
+			var typeId = jQuery("#eType").val();
+			
+			jQuery.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/IMS/editClient.do",
+			method: "POST",
+			data: JSON.stringify({
+				strId : clientId, strAddId : addressId, name : clientName, email : email, 
+				pocName : contactName, phone : phone,
+				fax : fax, addLine1 : adLine1, addLine2 : adLine2,
+				stateId : stateId, city : city, zip : zip, clientTypeId : typeId
+			}),
+			success: function(){
+				alert("Edited Client successfully!");
+			}
+		});
+	});
 	
+});
+
+	jQuery(document).ready(function(){
+		jQuery("#deleteProduct").click(function(){
+			var clientName = jQuery("#eName").val();
+			jQuery.ajax({
+			// contentType application/json
+			headers: {          
+    			"Content-Type": "application/json"
+    		},
+			url: "http://localhost:9001/IMS/deleteProduct.do",
+			method: "POST",
+			data: JSON.stringify({
+				delName : clientName
+			}),
+			success: function(){
+				alert("Deleted Client successfully!");
+			}
+		});
+	});
+	
+});
 
 </script>
 </html>

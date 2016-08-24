@@ -227,7 +227,7 @@
 	        	<td>State:</td>
 	        	<td>
 	        		<select name="eState" id="eState" class="form-control" id="state">
-	        			<option selected ><c:out value="${eClient.address.state.name}"></c:out></option>
+	        			<option selected >Select A State</option>
 	        			<c:forEach var="s" items="${states}">
 	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
 	        			</c:forEach>
