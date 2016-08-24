@@ -61,14 +61,14 @@
 		  			<td><fmt:formatNumber type="currency"><c:out value="${p.cost}"></c:out></fmt:formatNumber></td>
 		  			<td><c:out value="${p.stock}"></c:out></td>
 		  			<td><c:out value="${p.description}"></c:out></td>
-		  			<td><input type="button" value="Delete"></td> <!-- Need to make this...Ajax-y... -->
+		  			<td><button type="button" class="btn btn-primary" name="p.id" onclick="getProduct('${p.name}')" data-toggle="modal" data-target="#productEditModal">Edit</button></td><!-- Need to make this...Ajax-y... -->
 		  		</tr>
 		  		</c:forEach>
 			</table>
 		</div>
 		<br />
 		<!-- Trigger the modal with a button -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productModal">Open Modal</button>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#productModal">Add Product</button>
 		<br />
 		<br />
 		<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
@@ -96,36 +96,36 @@
 	      <table id="modal-table">
 	        <tr>
 	        	<td>Product Name:</td>
-	        	<td><input id="prodName" type="text" class="form-control" name="prodName"></td>
+	        	<td><input required id="prodName" type="text" class="form-control" name="prodName"></td>
 	        	
 	        </tr>
 	        <tr>
 	        	<td>Short Name:</td>
-	        	<td><input id="shortName" type="text" class="form-control" name="shortName"></td>
+	        	<td><input required id="shortName" type="text" class="form-control" name="shortName"></td>
 	        </tr>
 	        <tr>
 	        	<td>Product Description:</td>
-	        	<td><input id="prodDesc" type="text" class="form-control" name="prodDesc"></td>
+	        	<td><input required id="prodDesc" type="text" class="form-control" name="prodDesc"></td>
 	        </tr>
 	        <tr>
 	        	<td>Cost:</td>
-	        	<td><input id="cost" type="text" class="form-control" name="cost"></td>
+	        	<td><input required id="cost" type="text" class="form-control" name="cost"></td>
 	        </tr>
 	        <tr>
 	        	<td>Size:</td>
-	        	<td><input id="size" type="text" class="form-control" name="size"></td>
+	        	<td><input required id="size" type="text" class="form-control" name="size"></td>
 	        </tr>
 	        <tr>
 	        	<td>Stock:</td>
-	        	<td><input id="stock" type="text" class="form-control" name="stock"></td>
+	        	<td><input required id="stock" type="text" class="form-control" name="stock"></td>
 	        </tr>
 	        <tr>
 	        	<td>Pre-order Threshold:</td>
-	        	<td><input id="quantity" type="text" class="form-control" name="quantity"></td>
+	        	<td><input required id="quantity" type="text" class="form-control" name="quantity"></td>
 	        </tr>
 	        <tr>
 	        	<td>Retail Price:</td>
-	        	<td><input id="retail" type="text" class="form-control" name="retail"></td>
+	        	<td><input required id="retail" type="text" class="form-control" name="retail"></td>
 	        </tr>
 	        <tr>
 	        <td>Category Description:</td>
@@ -148,89 +148,68 @@
 	
 	
 			<!-- Modal for Updating and Deletion -->
-	<div id="clientEditModal" class="modal fade" role="dialog">
+	<div id="productEditModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
 	
 	    <!-- Modal content-->
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Edit a Client</h4>
+	        <h4 class="modal-title">Edit a Product</h4>
 	      </div>
 	      <div class="modal-body">
 	      <table id="modal-table">
 	      	<tr>
-	      		<td>Id:</td>
+	      		<td>Product UPC:</td>
 	      		<td id="eId"></td>
 	      	</tr>
-	      	<tr style="display: none">
-	      		<td>AddId:</td>
-	      		<td><input type="text" id="eAddId"></td>
-	      	</tr>
-	        <tr>
-	        	<td>Client:</td>
-	        	<td><input required id="eName" type="text" class="form-control" name="clientName"></td>
+	      	<tr>
+	        	<td>Product Name:</td>
+	        	<td><input id="eProdName" type="text" class="form-control" name="prodName"></td>
 	        	
 	        </tr>
 	        <tr>
-	        	<td>Email:</td>
-	        	<td><input required id="eEmail" type="text" class="form-control" name="email"></td>
+	        	<td>Short Name:</td>
+	        	<td><input id="eShortName" type="text" class="form-control" name="shortName"></td>
 	        </tr>
 	        <tr>
-	        	<td>Contact Name:</td>
-	        	<td><input required id="eContactName" type="text" class="form-control" name="contactName"></td>
+	        	<td>Product Description:</td>
+	        	<td><input id="eDesc" type="text" class="form-control" name="prodDesc"></td>
 	        </tr>
 	        <tr>
-	        	<td>Phone:</td>
-	        	<td><input required id="ePhone" type="text" class="form-control" name="Phone"></td>
+	        	<td>Cost:</td>
+	        	<td><input id="eCost" type="text" class="form-control" name="cost"></td>
 	        </tr>
 	        <tr>
-	        	<td>Fax:</td>
-	        	<td><input required id="eFax" type="text" class="form-control" name="fax"></td>
+	        	<td>Size:</td>
+	        	<td><input id="eSize" type="text" class="form-control" name="size"></td>
 	        </tr>
 	        <tr>
-	        	<td>Address Line 1:</td>
-	        	<td><input required id="eAdLine1" type="text" class="form-control" name="adLine1"></td>
+	        	<td>Stock:</td>
+	        	<td><input id="eStock" type="text" class="form-control" name="stock"></td>
 	        </tr>
 	        <tr>
-	        	<td>Address Line 2:</td>
-	        	<td><input required id="eAdLine2" type="text" class="form-control" name="adLine2"></td>
+	        	<td>Pre-order Threshold:</td>
+	        	<td><input id="ePreQuan" type="text" class="form-control" name="quantity"></td>
 	        </tr>
 	        <tr>
-	        	<td>City:</td>
-	        	<td><input required id="eCity" type="text" class="form-control" name="city"></td>
+	        	<td>Retail Price:</td>
+	        	<td><input id="eRetailPrice" type="text" class="form-control" name="retail"></td>
 	        </tr>
 	        <tr>
-	        	<td>State:</td>
-	        	<td>
-	        		<select name="eState" id="eState" class="form-control" id="state">
-	        			<option selected >Select A State</option>
-	        			<c:forEach var="s" items="${states}">
-	        			<option id="${s.id}" value="${s.id}"><c:out value="${s.name}"></c:out></option>
-	        			</c:forEach>
-	        		</select>
-	        	</td>
-	        </tr>
-	        <tr>
-	        	<td>Zip:</td>
-	        	<td><input required id="eZip" type="text" class="form-control" name="zip"></td>
-	        </tr>
-	        <tr>
-	        	<td>Type:</td>
-	        	<td>
-					<select name="eType" id="eType" class="form-control">
-						<option selected disabled>Select Client Type</option>
-						<c:forEach var="t" items="${clientTypes}">
-						<option value="${t.id}"><c:out value="${t.clientList}"></c:out></option>
-						</c:forEach>
-					</select>
-				</td>
-	        </tr>
+	        <td>Category Description:</td>
+	        <td><select name="eDescCat[]" id="catDesc" class="selectpicker" multiple>
+	        	<c:forEach var="cd" items="${catDesc}">
+  						<option value="${cd.id}"><c:out value="${cd.description}"></c:out></option>	
+  				</c:forEach>
+				</select>
+			</td>
+			</tr>
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <input id="editClient" type="button"  value="Update" class="btn btn-success" ></input>
-        <input id="deleteClient" type="button"  value="Delete" class="btn btn-danger" ></input>
+        <input id="editProduct" type="button"  value="Update" class="btn btn-success" ></input>
+        <input id="deleteProduct" type="button"  value="Delete" class="btn btn-danger" ></input>
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
@@ -246,22 +225,21 @@ function getProduct(pName)
 		var productName = pName;
 		var eProduct;
 		
-		$.get("http://localhost:9001/IMS/clientInfo.do?productName=" + productName, function(response){
+		$.get("http://localhost:9001/IMS/productInfo.do?productName=" + productName, function(response){
 			eProduct = response;
 			
-			$("#eId").text(eProuct.id);
-		/*	$("#eAddId").val(eClient.address.id);
-			$("#eName").val(eClient.name);
-			$("#eEmail").val(eClient.email);
-			$("#eContactName").val(eClient.pocName);
-			$("#ePhone").val(eClient.phone);
-			$("#eFax").val(eClient.fax);
-			$("#eAdLine1").val(eClient.address.line1);
-			$("#eAdLine2").val(eClient.address.line2);
-			$("#eCity").val(eClient.address.city);
-			$("#eState").val(eClient.address.state.id);
-			$("#eZip").val(eClient.address.zip);
-			$("#eType").val(eClient.clientType.id);*/
+			$("#eId").text(eProduct.id);
+			$("#eProdName").val(eProduct.name);
+			$("#eShortName").val(eProduct.sName);
+			$("#eDesc").val(eProduct.description);
+			$("#eCost").val(eProduct.cost);
+			$("#eSize").val(eProduct.size);
+			$("#eStock").val(eProduct.stock);
+			$("#ePreQuan").val(eProduct.quantity);
+			$("#eRetailPrice").val(eProduct.msrp);
+			$("#eDescCat").val(eProduct.catDescIntId);
+			
+			
 			
 		});
 
@@ -305,35 +283,33 @@ function getProduct(pName)
 });
 	jQuery(document).ready(function(){
 		jQuery("#editProduct").click(function(){
-			var clientId = jQuery("#eId").text();
-			var addressId = jQuery("#eAddId").val();
-			var clientName = jQuery("#eName").val();
-			var email = jQuery("#eEmail").val();
-			var contactName = jQuery("#eContactName").val();
-			var phone = jQuery("#ePhone").val();
-			var fax = jQuery("#eFax").val();
-			var adLine1 = jQuery("#eAdLine1").val();
-			var adLine2 = jQuery("#eAdLine2").val();
-			var city = jQuery("#eCity").val();
-			var stateId = jQuery("#eState").val();
-			var zip = jQuery("#eZip").val();
-			var typeId = jQuery("#eType").val();
+			var prodId = jQuery("#eId").text();
+			var prodName = jQuery("#eProdName").val();
+			var shortName = jQuery("#eShortName").val();
+			var prodDesc = jQuery("#eDesc").val();
+			var cost = jQuery("#eCost").val();
+			var size = jQuery("#eSize").val();
+			var stock = jQuery("#eStock").val();
+			var quantity = jQuery("#ePreQuan").val();
+			var retail = jQuery("#eRetailPrice").val();
+			var catDesc = jQuery("#eDescCat").val();
 			
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
     			"Content-Type": "application/json"
     		},
-			url: "http://localhost:9001/IMS/editClient.do",
+			url: "http://localhost:9001/IMS/editProducts.do",
 			method: "POST",
 			data: JSON.stringify({
-				strId : clientId, strAddId : addressId, name : clientName, email : email, 
-				pocName : contactName, phone : phone,
-				fax : fax, addLine1 : adLine1, addLine2 : adLine2,
-				stateId : stateId, city : city, zip : zip, clientTypeId : typeId
+				strId : prodId, name : prodName, 
+				sName : shortName, description : prodDesc, 
+				cost : cost, size : size, stock : stock, 
+				strPreQuantity : quantity, strRetailPrice : retail,
+				catDescId : catDesc
 			}),
 			success: function(){
-				alert("Edited Client successfully!");
+				alert("Edited Product successfully!");
 			}
 		});
 	});
@@ -342,7 +318,7 @@ function getProduct(pName)
 
 	jQuery(document).ready(function(){
 		jQuery("#deleteProduct").click(function(){
-			var clientName = jQuery("#eName").val();
+			var prodId = jQuery("#eId").val();
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
@@ -350,11 +326,11 @@ function getProduct(pName)
     		},
 			url: "http://localhost:9001/IMS/deleteProduct.do",
 			method: "POST",
-			data: JSON.stringify({
-				delName : clientName
+			data: ({
+				delStrId : prodId
 			}),
 			success: function(){
-				alert("Deleted Client successfully!");
+				alert("Deleted Product successfully!");
 			}
 		});
 	});

@@ -66,7 +66,7 @@
 		  				<c:if test="${c.clientType.id == 1}"><c:out value="Supplier"></c:out></c:if>
 		  				<c:if test="${c.clientType.id == 2}"><c:out value="Retailer"></c:out></c:if>
 		  			</td>
-		  			<td><button type="button" class="btn btn-primary" value="${c}" data-toggle="modal" data-target="#clientEditModal">Edit</button></td> <!-- Need to make this...Ajax-y... -->
+		  			<td><button type="button" class="btn btn-primary" name="c.id" onclick="getClient('${c.name}')" data-toggle="modal" data-target="#clientEditModal">Edit</button></td> <!-- Need to make this...Ajax-y... -->
 		  		</tr>
 		  		</c:forEach>
 			</table>
@@ -184,7 +184,7 @@
 	      <table id="modal-table">
 	      	<tr>
 	      		<td>Id:</td>
-	      		<td id="eId"><c:out value="${eClient.id}"></c:out></td>
+	      		<td id="eId"></td>
 	      	</tr>
 	      	<tr style="display: none">
 	      		<td>AddId:</td>
@@ -192,36 +192,36 @@
 	      	</tr>
 	        <tr>
 	        	<td>Client:</td>
-	        	<td><input required id="eName" type="text" class="form-control" name="clientName"><c:out value="${eClient.name}"></c:out></td>
+	        	<td><input required id="eName" type="text" class="form-control" name="clientName"></td>
 	        	
 	        </tr>
 	        <tr>
 	        	<td>Email:</td>
-	        	<td><input required id="eEmail" type="text" class="form-control" name="email"><c:out value="${eClient.email}"></c:out></td>
+	        	<td><input required id="eEmail" type="text" class="form-control" name="email"></td>
 	        </tr>
 	        <tr>
 	        	<td>Contact Name:</td>
-	        	<td><input required id="eContactName" type="text" class="form-control" name="contactName"><c:out value="${eClient.pocName}"></c:out></td>
+	        	<td><input required id="eContactName" type="text" class="form-control" name="contactName"></td>
 	        </tr>
 	        <tr>
 	        	<td>Phone:</td>
-	        	<td><input required id="ePhone" type="text" class="form-control" name="Phone"><c:out value="${eClient.phone}"></c:out></td>
+	        	<td><input required id="ePhone" type="text" class="form-control" name="Phone"></td>
 	        </tr>
 	        <tr>
 	        	<td>Fax:</td>
-	        	<td><input required id="eFax" type="text" class="form-control" name="fax"><c:out value="${eClient.fax}"></c:out></td>
+	        	<td><input required id="eFax" type="text" class="form-control" name="fax"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 1:</td>
-	        	<td><input required id="eAdLine1" type="text" class="form-control" name="adLine1"><c:out value="${eClient.address.line1}"></c:out></td>
+	        	<td><input required id="eAdLine1" type="text" class="form-control" name="adLine1"></td>
 	        </tr>
 	        <tr>
 	        	<td>Address Line 2:</td>
-	        	<td><input required id="eAdLine2" type="text" class="form-control" name="adLine2"><c:out value="${eClient.address.line2}"></c:out></td>
+	        	<td><input required id="eAdLine2" type="text" class="form-control" name="adLine2"></td>
 	        </tr>
 	        <tr>
 	        	<td>City:</td>
-	        	<td><input required id="eCity" type="text" class="form-control" name="city"><c:out value="${eClient.address.city}"></c:out></td>
+	        	<td><input required id="eCity" type="text" class="form-control" name="city"></td>
 	        </tr>
 	        <tr>
 	        	<td>State:</td>
@@ -328,7 +328,7 @@
 				name : clientName, email : email, 
 				pocName : contactName, phone : phone,
 				fax : fax, addLine1 : adLine1, addLine2 : adLine2,
-				stateId : stateId, city : city, zip: zip, clientTypeId : typeId
+				stateId : stateId, city : city, zip : zip, clientTypeId : typeId
 			}),
 			success: function(){
 				alert("Added Client successfully!");

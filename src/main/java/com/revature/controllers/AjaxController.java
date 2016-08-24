@@ -313,13 +313,6 @@ public class AjaxController
 	@ResponseBody
 	public String addProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
-//		String[] seeThem = product.getCatDescId();
-//		for(int x=0; x < seeThem.length; x++){
-//			
-//			System.out.println(seeThem[x]);
-//		}
-		
-		
 		//do Product
 		Set<CategoryDescription> descOptions = new HashSet<CategoryDescription>();
 		//for future use, because Sets are a pain to step through
@@ -357,6 +350,51 @@ public class AjaxController
 		List<CategoryDescription> catDesc = bl.getAllCatDesc();
 		req.setAttribute("catDesc", catDesc);
 		
+		return "productPage";
+	}
+	
+	@RequestMapping(value="productInfo.do", method=RequestMethod.GET)
+	@ResponseBody
+	public Product getProductInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String productName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
+	{
+		//Cannot simply pass on the Product. Infinite loop, and over loads the get request... severely. 
+		//Must make the String-like constructor and send it back through.
+		Product info = bl.getProduct(productName);
+		
+		List<CategoryDescription> prodCats = new ArrayList<CategoryDescription>(info.getCategoryDesc());
+		int prodCatId[] = new int[prodCats.size()];
+		
+		for(int x = 0; x < prodCats.size(); x++){
+			prodCatId[x] = prodCats.get(x).getId();
+		}
+		
+		Product product = new Product(info.getId(), info.getName(), info.getsName(),
+							info.getDescription(), info.getCost(), info.getSize(),
+							info.getStock(), info.getQuantity(), info.getMsrp(), prodCatId);
+		
+	
+		
+		return product;
+	}
+	
+	@RequestMapping(value="editProduct.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
+		
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		System.out.println(client.getStrAddId());
+//
+//		State state = bl.getState(Integer.parseInt(client.getStateId()));
+//		Address address = new Address(Integer.parseInt(client.getStrAddId()), client.getAddLine1(), client.getAddLine2(), 
+//			client.getCity(), state, client.getZip());
+//		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
+//		Client newClient = new Client(Integer.parseInt(client.getStrId()), client.getName(), client.getEmail(),
+//				client.getPocName(), client.getPhone(), client.getFax(),
+//				address, clientType);
+//		bl.addClient(newClient);
 //		clients = bl.getAllClients();
 //		req.setAttribute("clients",clients); // commandName=this blank object
 //		List<State> states = bl.getAllStates();
@@ -365,25 +403,34 @@ public class AjaxController
 //		List<ClientType> clientTypes = bl.getClientTypes();
 //		req.setAttribute("clientTypes", clientTypes);
 		
+//		req.setAttribute("products",products); // commandName=this blank object
+//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+//		req.setAttribute("catDesc", catDesc);
+		
 		return "productPage";
 	}
 	
-	@RequestMapping(value="prouctInfo.do", method=RequestMethod.GET)
-	@ResponseBody
-	public Product getProductInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String productName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
-	{
-		
-		Product info = bl.getProduct(productName);
-		//Client info = bl.getClient(clientName);
-
-		/*request.setAttribute("eClient", info);
-
-		response.sendRedirect("http://localhost:9001/IMS/clientInfo.do");*/
-		
-		return info;
-	}
 	
+	@RequestMapping(value="deleteProduct.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+
+		int productId = product.getId();
 		
+		Product delProduct = bl.getProduct(productId);
+		
+		bl.deleteProduct(delProduct);
+
+		req.setAttribute("products",products); // commandName=this blank object
+		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+		req.setAttribute("catDesc", catDesc);
+//		
+		return "productPage";
+	}
 /*	public List<Product> getProductsByClient(
 			HttpServletRequest request,
 			HttpServletResponse response)

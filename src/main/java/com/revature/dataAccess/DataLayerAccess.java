@@ -420,6 +420,10 @@ public class DataLayerAccess
 		Product product = dao.getProduct(productName);
 		return product;
 	}
+	public Product getProduct(int productId) {
+		Product prodcut = dao.getProduct(productId);
+		return prodcut;
+	}
 
 	
 	

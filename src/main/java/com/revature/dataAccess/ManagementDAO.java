@@ -330,6 +330,14 @@ public class ManagementDAO
 		return product;
 	}
 
+	public Product getProduct(int productId) {
+		String hql = "FROM product WHERE id =:id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", productId);
+		Product product = (Product) query.uniqueResult();
+		return product;
+	}
+
 
 
 	
