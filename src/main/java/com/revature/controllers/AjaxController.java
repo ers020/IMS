@@ -419,7 +419,7 @@ public class AjaxController
 		//		and is parsed on this side, to get all of the items needed.
 		//		
 
-		int productId = product.getId();
+		int productId = Integer.parseInt(product.getDelStrId());
 		
 		Product delProduct = bl.getProduct(productId);
 		
