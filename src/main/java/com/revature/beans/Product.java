@@ -20,7 +20,7 @@ import org.hibernate.type.BlobType;
 
 @Entity
 @Table(name="BEARDO_PRODUCTS")
-@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
+//@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
 public class Product 
 {
 	@Id
@@ -59,7 +59,7 @@ public class Product
 	@Column(name="PRODUCT_IMAGE")
 	private BlobType image;  //OPTIONAL, ALSO NOT SURE IF BLOBTYPE
 	
-	@ManyToMany(cascade= CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="PRODUCT_CATEGORIES", 
 			joinColumns=@JoinColumn(name="PRODUCT_UPC"),
 			inverseJoinColumns=@JoinColumn(name="CATEGORY_ID"))
@@ -74,16 +74,16 @@ public class Product
 	private String strRetailPrice;
 	private String catDescId[];
 	private int catDescIntId[];
-	private String delStrId;
+	private String delName;
 	
 	
 	
-	public String getDelStrId() {
-		return delStrId;
+	public String getDelName() {
+		return delName;
 	}
 
-	public void setDelStrId(String delStrId) {
-		this.delStrId = delStrId;
+	public void setDeldelName(String delName) {
+		this.delName = delName;
 	}
 
 	public String getStrId() {
@@ -281,10 +281,18 @@ public class Product
 		super();
 	}
 	
-	public Product(String delStrId)
+	public Product(String delName)
 	{
 		super();
-		this.delStrId = delStrId;
+		this.delName = delName;
+	}
+	
+	public Product(String delName, String strId, String[] catDescId)
+	{
+		super();
+		this.delName = delName;
+		this.strId = strId;
+		this.catDescId = catDescId;
 	}
 	
 	public Product(String name, String sName, String description, String strCost, String strSize, String strStock,

@@ -415,19 +415,23 @@ public class AjaxController
 	@ResponseBody
 	public String deleteProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product)
 	{	
-		//	The system puts all information into a custom Client object
-		//		and is parsed on this side, to get all of the items needed.
-		//		
+		//	Pulled the name, id, and CategoryDescription array associated
+		//		with that item. As we have to manually disconnect the Product
+		//		from the CategoryDescription (i.e. go into the Category Description's
+		//		set of Products, and remove them from the set. Then, we should
+		//		be able to delete the product.
+		//	Could do something similar for the update if the CategoryDescription's change
 
-		int productId = Integer.parseInt(product.getDelStrId());
 		
-		Product delProduct = bl.getProduct(productId);
-		
-		bl.deleteProduct(delProduct);
-
-		req.setAttribute("products",products); // commandName=this blank object
-		List<CategoryDescription> catDesc = bl.getAllCatDesc();
-		req.setAttribute("catDesc", catDesc);
+//		
+//		Product delProduct = bl.getProduct(productName);
+//		
+//		bl.deleteProduct(delProduct);
+//
+//		products = bl.getAllProducts();
+//		req.setAttribute("products",products); // commandName=this blank object
+//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+//		req.setAttribute("catDesc", catDesc);
 //		
 		return "productPage";
 	}

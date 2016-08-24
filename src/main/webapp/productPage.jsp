@@ -318,7 +318,9 @@ function getProduct(pName)
 
 	jQuery(document).ready(function(){
 		jQuery("#deleteProduct").click(function(){
-			var prodId = jQuery("#eId").val();
+			var pName = jQuery("#eProdName").val();
+			var pId = jQuery("#eId").text();
+			var pCatDesc = jQuery("eDescCat").val();
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
@@ -326,8 +328,8 @@ function getProduct(pName)
     		},
 			url: "http://localhost:9001/IMS/deleteProduct.do",
 			method: "POST",
-			data: ({
-				delStrId : prodId
+			data: JSON.stringify({
+				delName : pName, strId : pId, catDescId : pCatDesc
 			}),
 			success: function(){
 				alert("Deleted Product successfully!");

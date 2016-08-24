@@ -241,11 +241,6 @@ public class BusinessLayer {
 		return product;
 	}
 
-	public Product getProduct(int productId) {
-		Product product = dla.getProduct(productId);
-		return product;
-	}
-
 	
 
 

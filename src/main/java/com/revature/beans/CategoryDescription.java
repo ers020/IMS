@@ -29,7 +29,7 @@ public class CategoryDescription
 	@Column(name="CATEGORY_DESCRIPTION", nullable=false)
 	private String description;
 	
-	@ManyToMany(cascade=CascadeType.ALL, mappedBy="categoryDesc")//POSSIBLY NEED SOMETHING MORE HERE
+	@ManyToMany(mappedBy="categoryDesc")//POSSIBLY NEED SOMETHING MORE HERE
 	private Set<Product> productCats;
 
 	public int getId()
