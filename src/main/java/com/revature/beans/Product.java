@@ -68,6 +68,7 @@ public class Product
 	//////////////////////////////////////////////////////
 	private String strId;
 	private String strCost;
+	private String strSize;
 	private String strStock;
 	private String strPreQuantity;
 	private String strRetailPrice;
@@ -109,6 +110,13 @@ public class Product
 		this.strCost = strCost;
 	}
 
+	public String getStrSize() {
+		return strSize;
+	}
+
+	public void setStrSize(String strSize) {
+		this.strSize = strSize;
+	}
 
 	public String getStrStock() {
 		return strStock;
@@ -279,12 +287,6 @@ public class Product
 		this.delName = delName;
 	}
 	
-	public Product(int id, Set<CategoryDescription> categoryDesc) {
-		super();
-		this.id = id;
-		this.categoryDesc = categoryDesc;
-	}
-
 	public Product(String delName, String strId, String[] catDescId)
 	{
 		super();
@@ -293,48 +295,34 @@ public class Product
 		this.catDescId = catDescId;
 	}
 	
-	public Product(String name, String sName, String description, String strCost, String size, String strStock,
+	public Product(String name, String sName, String description, String strCost, String strSize, String strStock,
 			String strPreQuantity, String strRetailPrice, String[] catDescId) {
 		super();
 		this.name = name;
 		this.sName = sName;
 		this.description = description;
 		this.strCost = strCost;
-		this.size = size;
+		this.strSize = strSize;
 		this.strStock = strStock;
 		this.strPreQuantity = strPreQuantity;
 		this.strRetailPrice = strRetailPrice;
 		this.catDescId = catDescId;
 	}
 	
-	public Product(String strId, String name, String sName, String description, String strCost, String size, String strStock,
+	public Product(String strId, String name, String sName, String description, String strCost, String strSize, String strStock,
 			String strPreQuantity, String strRetailPrice, String[] catDescId) {
 		super();
 		this.name = name;
 		this.sName = sName;
 		this.description = description;
 		this.strCost = strCost;
-		this.size = size;
+		this.strSize = strSize;
 		this.strStock = strStock;
 		this.strPreQuantity = strPreQuantity;
 		this.strRetailPrice = strRetailPrice;
 		this.catDescId = catDescId;
 	}
 
-	public Product(int id, String name, String sName, String description, double cost, String size, int stock,
-			int quantity, double msrp) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.sName = sName;
-		this.description = description;
-		this.cost = cost;
-		this.size = size;
-		this.stock = stock;
-		this.quantity = quantity;
-		this.msrp = msrp;
-	}
-	
 	public Product(int id, String name, String sName, String description, double cost, String size, int stock,
 			int quantity, double msrp, Set<CategoryDescription> categoryDesc) {
 		super();

@@ -144,6 +144,34 @@ public class AjaxController
 		return "clientsPage";
 	}
 	
+	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Client> listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		String cType = (String) type;
+
+//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
+		
+//		System.out.println("Type: " + cType);
+		
+		List<Client> clients = bl.getClientList(1);
+		
+		for(Client c : clients)
+		{
+			System.out.println(c.getName());
+		}
+		
+		System.out.println(clients.size());
+	
+//		req.getSession().setAttribute("clients", clients);
+		
+		return clients;
+	}
+	
 	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
 	@ResponseBody
 	public Client getClientInfo(HttpServletRequest request, HttpServletResponse response,  @RequestParam String clientName) throws IOException  //This class will be used to sort client lists...hopefully it works as planned
@@ -155,22 +183,6 @@ public class AjaxController
 		response.sendRedirect("http://localhost:9001/IMS/clientInfo.do");*/
 		
 		return info;
-	}
-	
-	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public List<Client> listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
-	{	
-		
-		
-		List<Client> clients = bl.getClientList(1);
-		
-		for(Client c : clients)
-		{
-			System.out.println(c.getName());
-		}
-		
-		return clients;
 	}
 /*	@RequestMapping(
 			method=RequestMethod.GET, 
@@ -343,14 +355,12 @@ public class AjaxController
 		//get everything set for product
 		Product newProduct = new Product(product.getName(), product.getsName(),
 				product.getDescription(), Double.parseDouble(product.getStrCost()), 
-				product.getSize(), Integer.parseInt(product.getStrStock()), 
+				product.getStrSize(), Integer.parseInt(product.getStrStock()), 
 				Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
 				descOptions);
 		
 		//save it
 		bl.addProduct(newProduct);
-		
-		
 		
 		//grab it
 		Set<Product> savedProduct = bl.getProductByName(product.getName());
@@ -379,15 +389,18 @@ public class AjaxController
 		//Must make the String-like constructor and send it back through.
 		Product info = bl.getProduct(productName);
 		
+		List<CategoryDescription> prodCats = new ArrayList<CategoryDescription>(info.getCategoryDesc());
+		int prodCatId[] = new int[prodCats.size()];
 		
-		//UNDO CLOSE OFF AFTER FIGURING OUT THE ISSUE!!!!!!
-//		for(int x = 0; x < prodCats.size(); x++){
-//			prodCatId[x] = prodCats.get(x).getId();
-//		}
+		for(int x = 0; x < prodCats.size(); x++){
+			prodCatId[x] = prodCats.get(x).getId();
+		}
 		
 		Product product = new Product(info.getId(), info.getName(), info.getsName(),
 							info.getDescription(), info.getCost(), info.getSize(),
-							info.getStock(), info.getQuantity(), info.getMsrp());
+							info.getStock(), info.getQuantity(), info.getMsrp(), prodCatId);
+		
+	
 		
 		return product;
 	}
@@ -396,39 +409,31 @@ public class AjaxController
 	@ResponseBody
 	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
-		String[] descList = product.getCatDescId();
-		if(descList != null){
-			//do Product
-			Set<CategoryDescription> descOptions = new HashSet<CategoryDescription>();
-			//for future use, because Sets are a pain to step through
-			List<CategoryDescription> descFuture = new ArrayList<CategoryDescription>();
-			
-				
-			for (int x = 0; x < descList.length; x++){
-				descOptions.add(bl.getCatDescById(Integer.parseInt(descList[x])));
-				descFuture.add(bl.getCatDescById(Integer.parseInt(descList[x])));
-				
-				//get everything set for product
-				Product newProduct = new Product(Integer.parseInt(product.getStrId()), product.getName(), product.getsName(),
-						product.getDescription(), Double.parseDouble(product.getStrCost()), 
-						product.getSize(), Integer.parseInt(product.getStrStock()), 
-						Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
-						descOptions);
-				
-				//save it
-				bl.addProduct(newProduct);
-			}
-		}//end if
-		else{
-			
-			
-			Product newProduct = new Product(Integer.parseInt(product.getStrId()), product.getName(), product.getsName(),
-					product.getDescription(), Double.parseDouble(product.getStrCost()), 
-					product.getSize(), Integer.parseInt(product.getStrStock()), 
-					Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()));
-			
-			bl.addProduct(newProduct);
-		}
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		System.out.println(client.getStrAddId());
+//
+//		State state = bl.getState(Integer.parseInt(client.getStateId()));
+//		Address address = new Address(Integer.parseInt(client.getStrAddId()), client.getAddLine1(), client.getAddLine2(), 
+//			client.getCity(), state, client.getZip());
+//		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
+//		Client newClient = new Client(Integer.parseInt(client.getStrId()), client.getName(), client.getEmail(),
+//				client.getPocName(), client.getPhone(), client.getFax(),
+//				address, clientType);
+//		bl.addClient(newClient);
+//		clients = bl.getAllClients();
+//		req.setAttribute("clients",clients); // commandName=this blank object
+//		List<State> states = bl.getAllStates();
+//		req.setAttribute("states", states);
+//	
+//		List<ClientType> clientTypes = bl.getClientTypes();
+//		req.setAttribute("clientTypes", clientTypes);
+		
+//		req.setAttribute("products",products); // commandName=this blank object
+//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+//		req.setAttribute("catDesc", catDesc);
 		
 		return "productPage";
 	}
@@ -444,7 +449,7 @@ public class AjaxController
 		//		set of Products, and remove them from the set. Then, we should
 		//		be able to delete the product.
 		//	Could do something similar for the update if the CategoryDescription's change
-		
+
 		Product delProduct = bl.getProduct(product.getDelName());
 		Set<CategoryDescription> temp = new HashSet<CategoryDescription>(delProduct.getCategoryDesc());
 
@@ -472,6 +477,7 @@ public class AjaxController
 		req.setAttribute("catDesc", catDesc);
 		
 		return "productPage";
+
 	}
 /*	public List<Product> getProductsByClient(
 			HttpServletRequest request,
