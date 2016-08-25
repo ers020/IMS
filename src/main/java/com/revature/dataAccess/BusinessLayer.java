@@ -93,10 +93,8 @@ public class BusinessLayer {
 	
 	//get all products
 	public List<Product> getAllProducts(){
-		
-
 		List<Product> products = dla.getAllProducts();
-		System.out.println("Business Layer " + products);
+		
 		return products;
 	}
 	
@@ -108,7 +106,6 @@ public class BusinessLayer {
 	//'delete' product
 	public void deleteProduct(Product product){
 		
-		System.out.println(product.getId());
 		dla.deleteProduct(product);
 	}
 	
@@ -128,7 +125,6 @@ public class BusinessLayer {
 	public List<Client> getAllClients() {
 
 		List<Client> clients = dla.getAllClients();
-		System.out.println("Business Layer " + clients);
 		return clients;
 	}
 	

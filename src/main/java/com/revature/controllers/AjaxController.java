@@ -343,7 +343,7 @@ public class AjaxController
 		//get everything set for product
 		Product newProduct = new Product(product.getName(), product.getsName(),
 				product.getDescription(), Double.parseDouble(product.getStrCost()), 
-				product.getStrSize(), Integer.parseInt(product.getStrStock()), 
+				product.getSize(), Integer.parseInt(product.getStrStock()), 
 				Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
 				descOptions);
 		
@@ -379,18 +379,15 @@ public class AjaxController
 		//Must make the String-like constructor and send it back through.
 		Product info = bl.getProduct(productName);
 		
-		List<CategoryDescription> prodCats = new ArrayList<CategoryDescription>(info.getCategoryDesc());
-		int prodCatId[] = new int[prodCats.size()];
 		
-		for(int x = 0; x < prodCats.size(); x++){
-			prodCatId[x] = prodCats.get(x).getId();
-		}
+		//UNDO CLOSE OFF AFTER FIGURING OUT THE ISSUE!!!!!!
+//		for(int x = 0; x < prodCats.size(); x++){
+//			prodCatId[x] = prodCats.get(x).getId();
+//		}
 		
 		Product product = new Product(info.getId(), info.getName(), info.getsName(),
 							info.getDescription(), info.getCost(), info.getSize(),
-							info.getStock(), info.getQuantity(), info.getMsrp(), prodCatId);
-		
-	
+							info.getStock(), info.getQuantity(), info.getMsrp());
 		
 		return product;
 	}
@@ -399,7 +396,39 @@ public class AjaxController
 	@ResponseBody
 	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
-		 
+		String[] descList = product.getCatDescId();
+		if(descList != null){
+			//do Product
+			Set<CategoryDescription> descOptions = new HashSet<CategoryDescription>();
+			//for future use, because Sets are a pain to step through
+			List<CategoryDescription> descFuture = new ArrayList<CategoryDescription>();
+			
+				
+			for (int x = 0; x < descList.length; x++){
+				descOptions.add(bl.getCatDescById(Integer.parseInt(descList[x])));
+				descFuture.add(bl.getCatDescById(Integer.parseInt(descList[x])));
+				
+				//get everything set for product
+				Product newProduct = new Product(Integer.parseInt(product.getStrId()), product.getName(), product.getsName(),
+						product.getDescription(), Double.parseDouble(product.getStrCost()), 
+						product.getSize(), Integer.parseInt(product.getStrStock()), 
+						Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
+						descOptions);
+				
+				//save it
+				bl.addProduct(newProduct);
+			}
+		}//end if
+		else{
+			
+			
+			Product newProduct = new Product(Integer.parseInt(product.getStrId()), product.getName(), product.getsName(),
+					product.getDescription(), Double.parseDouble(product.getStrCost()), 
+					product.getSize(), Integer.parseInt(product.getStrStock()), 
+					Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()));
+			
+			bl.addProduct(newProduct);
+		}
 		
 		return "productPage";
 	}
@@ -416,60 +445,32 @@ public class AjaxController
 		//		be able to delete the product.
 		//	Could do something similar for the update if the CategoryDescription's change
 		
-		Product tempProduct = bl.getProduct(product.getDelName());
-		System.out.println(tempProduct.getId());
-		Set<CategoryDescription> allCats = new HashSet<CategoryDescription>(bl.getAllCatDesc());
-		
-		Set<CategoryDescription> temp = new HashSet<CategoryDescription>(tempProduct.getCategoryDesc());
+		Product delProduct = bl.getProduct(product.getDelName());
+		Set<CategoryDescription> temp = new HashSet<CategoryDescription>(delProduct.getCategoryDesc());
 
-		System.out.println(allCats.toString());
-		System.out.println(tempProduct.getCategoryDesc().toString());
-		System.out.println(temp.toString());
-		for(CategoryDescription cd : tempProduct.getCategoryDesc()){
+		for(CategoryDescription cd : delProduct.getCategoryDesc()){
 			
 			temp.remove(cd);
 			
 		}
 
-		System.out.println(temp.toString());
-		Product delProduct = new Product(tempProduct.getId(), temp);
+
+		delProduct.setCategoryDesc(temp);
 		
-		//GO THROUGH ALL CATEGORY DESCRIPTIONS
-//		for(CategoryDescription cd : allCats){
-//			
-//			//GO THROUGH SET<PRODUCT> 
-//			for(Product pd : cd.getproductCats()){
-//				
-//				if(pd.getId() == delProduct.getId()){
-//					System.out.println("match");
-//					
-//					allCats.remove(delProduct);
-//				}
-//			}
-//		}
-//		
+		System.err.println(delProduct.getCategoryDesc().toString());
 		
+		bl.addProduct(delProduct);
 		
+		System.err.println(delProduct.getCategoryDesc().toString());
 		
 		bl.deleteProduct(delProduct);
 	
-		//	find the matches between the product and category description, where
-		//	the product id matches the set from product list in category description.
+
+		products = bl.getAllProducts();
+		req.setAttribute("products",products); // commandName=this blank object
+		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+		req.setAttribute("catDesc", catDesc);
 		
-		
-		
-		
-		
-//		
-//		Product delProduct = bl.getProduct(productName);
-//		
-//		bl.deleteProduct(delProduct);
-//
-//		products = bl.getAllProducts();
-//		req.setAttribute("products",products); // commandName=this blank object
-//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
-//		req.setAttribute("catDesc", catDesc);
-//		
 		return "productPage";
 	}
 /*	public List<Product> getProductsByClient(

@@ -34,10 +34,7 @@ public class CategoryDescription
 	
 	
 	//
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="PRODUCT_CATEGORIES", 
-			joinColumns=@JoinColumn(name="CATEGORY_ID"),
-			inverseJoinColumns=@JoinColumn(name="PRODUCT_UPC"))//POSSIBLY NEED SOMETHING MORE HERE
+	@ManyToMany(mappedBy="categoryDesc")
 	private Set<Product> productCats;
 
 	public int getId()

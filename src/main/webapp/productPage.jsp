@@ -239,7 +239,9 @@ function getProduct(pName)
 			$("#eRetailPrice").val(eProduct.msrp);
 			$("#eDescCat").val(eProduct.catDescIntId);
 			
-			el = document.getElementById("catDesc");
+			
+			//NOT WORKING
+		/*	el = document.getElementById("catDesc");
 		
 		for(var x = 0; x < eProduct.catDescIntId.length; x++){
 			for(var y = 0; y < el.length; y++){
@@ -247,7 +249,7 @@ function getProduct(pName)
 					el[x].selected == true;
 				}
 			}
-		}
+		}*/
 			
 			
 		});
@@ -301,21 +303,19 @@ function getProduct(pName)
 			var stock = jQuery("#eStock").val();
 			var quantity = jQuery("#ePreQuan").val();
 			var retail = jQuery("#eRetailPrice").val();
-			var catDesc = jQuery("#eDescCat").val();
 			
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
     			"Content-Type": "application/json"
     		},
-			url: "http://localhost:9001/IMS/editProducts.do",
+			url: "http://localhost:9001/IMS/editProduct.do",
 			method: "POST",
 			data: JSON.stringify({
 				strId : prodId, name : prodName, 
 				sName : shortName, description : prodDesc, 
-				cost : cost, size : size, stock : stock, 
-				strPreQuantity : quantity, strRetailPrice : retail,
-				catDescId : catDesc
+				strCost : cost, size : size, strStock : stock, 
+				strPreQuantity : quantity, strRetailPrice : retail
 			}),
 			success: function(){
 				alert("Edited Product successfully!");

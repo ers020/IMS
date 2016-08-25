@@ -174,7 +174,6 @@ public class ManagementDAO
 		
 		@SuppressWarnings("unchecked")
 		List<Product> products = query.list();
-		//System.out.println(products);
 		return products;
 	}
 
@@ -233,22 +232,12 @@ public class ManagementDAO
 	
 	public void deleteProduct(Product product) 
 	{
-		System.out.println(product.getId());
+		
 		String hql = "DELETE Product WHERE id =:id";
 		Query query = session.createQuery(hql);
 		query.setParameter("id", product.getId());
 		int result = query.executeUpdate();
-		System.out.println(result);
-//		String qsl = "DELETE PRODUCT_CATEGORIES WHERE PRODUCT_UPC =? AND ";
-//		Query query = session.createQuery(hql);
-//		query.setParameter("id", product.getId());
-//		//int done = query.executeUpdate();
-//		System.out.println("done");
-//		"DELETE Product WHERE id =:id";
-//		 query = session.createQuery(hql2);
-//		query.setParameter("id", product.getId());
-//		int result = query.executeUpdate();
-//		System.out.println("Delete went through " + result);
+		System.err.println(result);
 	}
 	
 	public List<Product> getClientProds(int clientId)

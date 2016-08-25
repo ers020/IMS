@@ -97,7 +97,6 @@ public class DataLayerAccess
 		
 			List<Client> currentClients = dao.getAllClients();
 			tx.commit();
-			System.out.println("Data Layer " + currentClients);
 			return currentClients;
 		
 		}catch(Throwable t){
@@ -197,14 +196,16 @@ public class DataLayerAccess
 	public void deleteProduct(Product product) {
 	//	log.info("'Terminating' client");
 		Transaction tx = session.beginTransaction();
-		System.out.println(product.getId());
+		
 		try{
 			
 			dao.deleteProduct(product);
 			tx.commit();
+			System.err.println("success");
 	//		log.info("Product 'deletion' successful");
 		}catch(Throwable t){
 			tx.rollback();
+			System.err.println("FAILURE!");
 	//		log.error("Product 'deletion' failed");
 		}
 		
@@ -267,7 +268,7 @@ public class DataLayerAccess
 		
 			List<Product> products = dao.getAllProducts();
 			tx.commit();
-			System.out.println("Data Layer: " + products);
+			
 			return products;
 		}catch(Throwable t){
 			tx.rollback();
