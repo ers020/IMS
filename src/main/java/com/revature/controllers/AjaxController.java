@@ -117,6 +117,41 @@ public class AjaxController
 		return "clientsPage";
 	}
 	
+	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, consumes="application/json")
+	@ResponseBody
+	public String[] listClients(HttpServletRequest req, HttpServletRequest resp, @RequestParam(value="var") String type)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		String cType = (String) type;
+
+//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
+		
+//		System.out.println("Type: " + cType);
+		
+		System.out.println("Type: " + Integer.parseInt(type));
+		
+		List<Client> clients = bl.getClientList(Integer.parseInt(type));
+		String[] clientNames = new String[clients.size()];
+		int i = 0;
+		
+		for(Client c : clients)
+		{
+			clientNames[i] = c.getName();
+			System.out.println(c.getName());
+			i++;
+		}
+		
+		System.out.println(clients.size());
+	
+		req.getSession().setAttribute("clientNames", clientNames);
+		
+		return clientNames;
+	}
+	
+	
 	@RequestMapping(value="deleteClient.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String deleteClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Client client)
@@ -144,40 +179,6 @@ public class AjaxController
 		return "clientsPage";
 	}
 	
-	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public Client[] listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
-	{	
-		//	The system puts all information into a custom Client object
-		//		and is parsed on this side, to get all of the items needed.
-		//		
-		
-//		String cType = (String) type;
-
-//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
-		
-//		System.out.println("Type: " + cType);
-		
-		List<Client> clients = bl.getClientList(1);
-//		
-		Client[] clientArray = new Client[clients.size()];
-		
-		for(int x = 0; x < clients.size(); x++){
-			
-			clientArray[x] = clients.get(x);
-		}
-		
-//		for(Client c : clients)
-//		{
-//			System.out.println(c.getName());
-//		}
-//		
-//		System.out.println(clients.size());
-		//req.setAttribute("specClients", clients);
-//		req.getSession().setAttribute("clients", clients);
-		
-		return clientArray;
-	}
 	
 	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
 	@ResponseBody
