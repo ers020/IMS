@@ -334,7 +334,19 @@ public class ManagementDAO
 		return product;
 	}
 
-
+	public double getPrice(String type)
+	{
+		System.out.println("Product: " + type);
+		
+		String hql ="FROM Product WHERE name =:name";
+		Query query = session.createQuery(hql);
+		query.setParameter("name", type);
+		Product product = (Product) query.uniqueResult();
+		
+		double price = product.getCost();
+		
+		return price;
+	}
 
 
 

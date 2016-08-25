@@ -32,68 +32,127 @@ function openModal()
 	$("#myModal").modal()
 }
 
-$(document).ready(function() {
-       $('.ajaxCon').click(function()
-       {
-           $.ajax({
-               type: "get",
-               url: "http://localhost:9001/imsWeb/clientInfo.do", //this is my servlet
-               data: "input=" +$('#ip').val()+"&output="+$('#op').val(),
-               success: function(msg)
-               {      
-                       openModal();
-               }
-           });
-       });
-
-   });
-	
- function clientInfo()
-{
-   $.ajax({
-         type: "get",
-        url: "http://localhost:9001/imsWeb/clientInfo.do", //this is my servlet
-          data: "input=" +$('#ip').val()+"&output="+$('#op').val(),
-    success: function(msg)
-   {      
-            openModal();
-     }
-	});
-}
-
 function radioFunc()
 {
+	if($('#r1').is(':checked'))
+	{
+		document.getElementById("cVal").value = 1;		
+	}
+	
+	else if($('#r2').is(':checked'))
+	{
+		document.getElementById("cVal").value = 2;
+	}
+
 	$.ajax({
-		headers: 
-			{          
-    			"Accept": "application/json"
-    		},
-			url: "http://localhost:9001/IMS/getClientsByType.do",
-			method: "GET",
+		    type: "GET",
+		    contentType: "application/json",
+		    dataType: "json",
+			url: "http://localhost:9001/IMS/getClientsByType.do?var=" + $("#cVal").val(),
 			success: function(resp)
 			{
 				var comboBox = document.createElement("select");
-					alert(resp);
+				var def = document.createElement("option");
+				def.value = -1;
+				def.text = "--Select--";
+				comboBox.appendChild(def);
 				
-				$.each(resp, function(c, clients){
+				//alert(resp);
+				
+				var blah = [];
+				blah = resp;
+								
+				$.each(resp, function(c, blah){
 					var option = document.createElement("option");
-					option.value = c.id;
-					option.text = c.name;
+					option.value = blah.id;
+					option.text = blah;
 					comboBox.appendChild(option);
 					});
-				//alert("Edited Client successfully!");
 				
 				$('#dropDownClient').append(comboBox);
 				
-				/* $('#cList').load(document.URL +  ' #cList');
-				alert(ct); */				
+				document.getElementById("r1").disabled = true;
+				document.getElementById("r2").disabled = true;
+				//document.getElementById("prodBox").disabled = false;
+			}
+		});
+}
+
+function doobie()
+{
+	$.ajax({
+		    type: "GET",
+		    contentType: "application/json",
+		    dataType: "json",
+			url: "http://localhost:9001/IMS/getProds.do",
+			success: function(resp)
+			{
+				var prodComboBox = document.createElement("select");
+				var def = document.createElement("option");
+				def.value = -1;
+				def.text = "--Select--";
+				prodComboBox.appendChild(def);
 				
-				/* $("#cList").html("<option value=\"def\" selected>Please select a client!</option>");
-				$.each(resp, function(c, client){
-					$("#cList").append(
-					"<option value=" + c.id + " onclick=\"javascript:getProducts(" + c.name + ")>" + c.name + "</option>"
-					);
-				}); */
+				var blah = [];
+				blah = resp;
+								
+				$.each(resp, function(c, blah){
+					var option = document.createElement("option");
+					option.value = blah;
+					option.text = blah;
+					prodComboBox.appendChild(option);
+					});
+				
+				$('#prodBox').append(prodComboBox);
+				var newBox = document.getElementById("dropDownClient").firstChild;
+				
+				newBox.disabled = true;
+				
+				document.getElementById("dropDownClient").replaceChild(newBox, document.getElementById("dropDownClient").firstChild);
+			}
+		});
+}/* ); */
+
+function qntyUnlock() 
+{
+	//document.getElementById("qnty").disabled = false;
+	
+	var e = document.getElementById("prodBox").firstChild;
+    var strOption = e.options[e.selectedIndex].value;
+    
+    //alert(strOption);
+    
+    $("#pVal").value = strOption;
+	
+	if(strOption == "--Select--")
+	{
+		document.getElementById("qnty").disabled = true;
+	}	
+	
+	else 
+	{
+		document.getElementById("qnty").disabled = false;
+	}
+	
+	$.ajax({
+		    type: "GET",
+		    contentType: "application/json",
+		    dataType: "json",
+			url: "http://localhost:9001/IMS/getProdPrice.do?var=" + strOption,
+			success: function(resp)
+			{				
+				//alert(resp);
+				
+				document.getElementById("prodCost").value = resp;
+				
+				/* var blah = [];
+				blah = resp;
+								
+				$.each(resp, function(c, blah){
+					document.getElementById("cost").value = blah;
+					}); */
+
+				//alert("success");
 			}
 		});
 }
@@ -168,42 +227,18 @@ function cType(type)
 	}
 }
 
-function getProducts(cName)
-{
-	var client = cName;
-	
-	jQuery.ajax
-		({
-			// contentType application/json
-			headers: 
-			{          
-    			"Content-Type": "application/json"
-    		},
-			url: "http://localhost:9001/IMS/getProdsByClient.do",
-			method: "POST",
-			data: JSON.stringify
-			({
-				clientType : ct
-			}),
-			success: function(resp)
-			{
-				//alert("Edited Client successfully!");
-				
-				$("#pList").html("<option value=\"def\" selected>Please select a product!</option>");
-				$.each(resp, function(p, product){
-					$("#cList").append(
-					"<option value=" + c.id + " onclick=\"javascript:getProducts('" + c.name + "')>" + c.name + "</option>"
-					);
-				});
-			}
-		});
-}
-
 function changeSubTotal() 
 {
-	var quantity = $("#qnty").val;
+	var quantity = $("#qnty").val();
+	var price = $("#prodCost").val();
 	
-	jQuery.ajax
+	var sub = quantity * price;
+	
+	alert("Q: " + quantity + ", P: " + price + ", S: " + sub);
+	
+	document.getElementById("subtotal").value = sub;
+	
+	/* jQuery.ajax
 	({
 		// contentType application/json
 		headers: 
@@ -221,7 +256,7 @@ function changeSubTotal()
 			//alert("Edited Client successfully!");
 			$("#subt").val(resp);
 		}
-	});
+	}); */
 }
 </script> 
 
@@ -242,95 +277,46 @@ function changeSubTotal()
 	<br />
 	
 	<div class="container body .col-xs-12 .col-sm-6 .col-lg-8">
-
-		<!-- <div id="radioBtn" class="visible radio-inline">
-			<label><input type="radio" onclick="javascript:cType(incoming)" name="invChoice" value="Incoming"/>Supplier</label><br/>
-			<label><input type="radio" onclick="javascript:cType(outgoing)" name="invChoice" value="Outgoing"/>Retailer</label>
-		</div> -->
-		<br />
-		<br />
-	
-		<select id="clients" >
-			<option>--Select--</option>
-			<c:forEach var="c" items="${clients}">
-	        	<option id="${c.id}" value="${c.id}"><c:out value="${c.name}"></c:out></option>
-	        </c:forEach>
-		</select>
+	<div id="title">
+	<h2>Invoice Creation</h2>
 	</div>
-	
-	<div>
+	<br />
+	<div id="radioBtn">
+		<label><input type="radio" onclick="radioFunc()" id="r1" name="invChoice" value="Incoming"/>Supplier</label><br/>
+		<label><input type="radio" onclick="radioFunc()" id="r2" name="invChoice" value="Outgoing"/>Retailer</label>
+	</div>
+	<br />
+	<br />
+	<span id="dropDownClient" onchange="javascript:doobie()"></span>
+	<br />
 		<table id="invoiceTable">
 			<tr>
-				<th>Invoice Type</th>
-		    	<th>Client</th>
 		    	<th>Product</th>
 		    	<th>Price</th>
 		    	<th>Quantity</th>
-		    	<th>Subtotal</th>
+		    	<th>Sub-total</th>
 		    	<th>Option</th>
 		  	</tr>
 		  	<tr>
+				<td>
+					<span id="prodBox" onchange="javascript:qntyUnlock()"></span>
+				</td>
 		  		<td>
-		  			<label><input type="radio" onclick="radioFunc()" id="r1" name="invChoice" value="Incoming"/>Supplier</label><br/>
-					<label><input type="radio" onclick="radioFunc()" id="r2" name="invChoice" value="Outgoing"/>Retailer</label>
+		  			<input type="number" id="prodCost" disabled="disabled" name="prodCost" value="${p.cost}"> 
+		  		</td>  
+		  		<td>
+		  	 		<input type="number" id="qnty" disabled="disabled" name="quantity" value="1" onkeydown="javascript:changeSubTotal()" onchange="javascript:changeSubTotal()"> <!-- <label value="0" name="initalCost"></label> -->
 		  		</td>
-		  	</tr>
-		  	<tr>
-		  	<td><span id="dropDownClient"> 
-		  	<%-- <c:choose>
-		  		<c:when test="${fn:length(clients) == 0}">
-			  		<select name="clients" onchange="">  <!-- combo box for clients based on type, needs AJAX -->
-					<option value="def" selected>Please select invoice type first!</option>
-					</select>
-		  		</c:when>
-		  		<c:otherwise>
-			  		<select name="clients" onchange="">  <!-- combo box for clients based on type, needs AJAX -->
-					<option value="def" selected>--Select--</option>
-					<c:forEach var="c" items="${clients}">
-						<option value="${c.id}" onclick="javascript:getProducts('${c.name}')">${c.name}</option>
-					</c:forEach>
-					</select>
-		  		</c:otherwise>
-		  	</c:choose> --%>
-				
-				</span>
-			</td>
-			<td>
-				<select name="products">  <!-- combo box for clients based on type, needs AJAX -->
-					<option value="def" selected>Please select a client first!</option>
-					<c:forEach var="p" items="${products}">
-						<option value="${p.id}">${p.name}</option>
-					</c:forEach>
-				</select>
-			</td>
-		  	<td>
-		  		<input type="number" disabled="disabled" name="prodCost" value="${p.cost}"> <!-- <label value="${p.cost}"></label> -->
-		  	</td>  <!-- THESE ALL NEED WIDTH: 100% IN CSS -->
-		  	 <%-- <td><input type="number" name="numOfProds" onchange="javascript:orderPrice(this.value)"><label>${prodPrice}</label>
-				<!--  <button>Change amount!</button>  <!-- THIS LITERALLY DOES NOTHING, AND WILL DO NOTHING, BUT IS NECESSARY FOR THE ABOVE ONCHANGE!!! -->
-			</td> --%>
-		  	 <td>
-		  	 	<input type="number" id="qnty" name="quantity" value="1" onkeydown="javascript:changeSubTotal()"> <!-- <label value="0" name="initalCost"></label> -->
-		  	 </td>
-		  	 <td>
-		  	 	<input type="number" disabled="disabled" id="subt" name="subTotal"> <!-- <label value="0" name="subTotal"></label> -->
-		  	 </td>
-		  	 <td>
-		  	 	<input type="button" value="Add!">
-		  	 </td>
+		  	 	<td>
+		  	 		<input type="number" disabled="disabled" id="subtotal" name="subtotal"> 
+		  	 	</td>
+		  	 	<td>
+		  	 		<input type="button" value="Add!">
+		  	 	</td>
 		  	 </tr>
 		  	
 		  	<tr></tr>
-		  <c:forEach var="i" items="${invoices}">
-		  	<tr onclick="" data-toggle="modal" data-target="#myModal"> <!-- WILL INSERT JS TO SHOW MORE DETAILS IN POP-UP -->
-		  		<td><c:out value="${i.invoiceCK}"></c:out></td>
-		  		<td><c:out value="${i.price}"></c:out></td>
-		  		<td><c:out value="${i.prodId.name}, ${i.prodId.cost}"></c:out></td>
-		  		<td><c:out value="${i.quantity}"></c:out></td>
-		  		<td><c:out value="THIS NEEDS STUFF"></c:out></td> <!-- NEED AJAX CALL TO GET CLIENT -->
-		  		<td><input type="button" value="Edit!"></td> <!-- Need to make this...Ajax-y... -->
-		  	</tr>
-		  </c:forEach>
+		 
 		  <tr id="blanktr" class="blanktr"></tr>
 		 
 		  	
@@ -345,42 +331,11 @@ function changeSubTotal()
 	</div>
 	
 	</div>
+	
 	<br />
 	
-	<!-- Trigger the modal with a button -->
-	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-	
-	<!-- Modal -->
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Modal Header</h4>
-	      </div>
-	      <div class="modal-body">
-	      <table id="modal-table">
-	        <tr><td>Name:</td><td>"${client.name}"</td></tr>
-	        <tr><td>Email:</td><td>"${client.email}"</td></tr>
-	        <tr><td>Contact Name:</td><td>"${client.pocName}"</td></tr>
-	        <tr><td>Phone:</td><td>"${client.phone}"</td></tr>
-	        <tr><td>Fax:</td><td>"${client.fax}"</td></tr>
-	        <tr><td>Address:</td><td>"${clientAddress}"</td></tr>
-	        <tr><td>Type:</td><td>"${clientType}"</td></tr>
-	        </table>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	
-	  </div>
-	</div>
-	<br />
-	
-	
+	<input id="cVal" name="clientType" type="hidden" value="1"/>
+	<input id="pVal" name="clientType" type="hidden" value="0"/>
 	
 </body>
 </html>

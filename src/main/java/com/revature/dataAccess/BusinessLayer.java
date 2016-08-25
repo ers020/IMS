@@ -239,7 +239,12 @@ public class BusinessLayer {
 		return product;
 	}
 
-	
+	public double getPrice(String type)
+	{
+		double price = dla.getPrice(type);
+		return price;
+	}
+
 
 
 
