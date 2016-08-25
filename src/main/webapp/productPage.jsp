@@ -129,7 +129,7 @@
 	        </tr>
 	        <tr>
 	        <td>Category Description:</td>
-	        <td><select name="catDesc[]" id="catDesc" class="selectpicker" multiple>
+	        <td><select name="catDesc[]" id="catDesc" class="selectpicker" multiple="multiple">
 	        	<c:forEach var="cd" items="${catDesc}">
   						<option value="${cd.id}"><c:out value="${cd.description}"></c:out></option>	
   				</c:forEach>
@@ -198,7 +198,7 @@
 	        </tr>
 	        <tr>
 	        <td>Category Description:</td>
-	        <td><select name="eDescCat[]" id="catDesc" class="selectpicker" multiple>
+	        <td><select name="eDescCat[]" id="catDesc" class="selectpicker" multiple="multiple">
 	        	<c:forEach var="cd" items="${catDesc}">
   						<option value="${cd.id}"><c:out value="${cd.description}"></c:out></option>	
   				</c:forEach>
@@ -239,6 +239,15 @@ function getProduct(pName)
 			$("#eRetailPrice").val(eProduct.msrp);
 			$("#eDescCat").val(eProduct.catDescIntId);
 			
+			el = document.getElementById("catDesc");
+		
+		for(var x = 0; x < eProduct.catDescIntId.length; x++){
+			for(var y = 0; y < el.length; y++){
+				if(el[x].innerHTML == eProduct.catDescIntId[y]){
+					el[x].selected == true;
+				}
+			}
+		}
 			
 			
 		});
@@ -272,7 +281,7 @@ function getProduct(pName)
 				name:prodName, sName:shortName, description:prodDesc,
 				strCost:cost, strSize:size, strStock:stock,
 				strPreQuantity:quantity, strRetailPrice:retail,
-				catDescId:catDesc
+				catDescId : catDesc
 			}),
 			success: function(){
 				alert("Added Product successfully!");

@@ -1,12 +1,14 @@
 package com.revature.app;
 
 
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import com.revature.beans.Client;
+import com.revature.beans.CategoryDescription;
 import com.revature.beans.Product;
-import com.revature.dataAccess.BusinessLayer;
 import com.revature.dataAccess.DataLayerAccess;
 
 public class Test 
@@ -15,12 +17,32 @@ public class Test
 	//private static Logger log = Logger.getRootLogger();
 	
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) 
 	{		
 		DataLayerAccess dla = new DataLayerAccess();
 		
-		List<Client> client = dla.getAllClients();
-		System.out.println(client);
+		Product product = dla.getProduct("Gilette Fusion");
+		
+		Set<CategoryDescription> catDesc = product.getCategoryDesc();
+		Set<CategoryDescription> allCat = new HashSet<CategoryDescription>(dla.getAllCatDesc());
+
+		 
+		
+
+		
+//		for(CategoryDescription print : allCat){	
+//			//System.out.println(print.getproductCats());
+//		
+//			for(Product prod : print.getproductCats()){
+//				
+//				//System.out.println(prod.getId());
+//				if(product.getId() == prod.getId()){
+//					System.out.println("They are equal here: " + prod.getName());
+//					
+//				}
+//			}
+//		}
 		
 	}
 	

@@ -156,6 +156,22 @@ public class AjaxController
 		
 		return info;
 	}
+	
+	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public List<Client> listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
+	{	
+		
+		
+		List<Client> clients = bl.getClientList(1);
+		
+		for(Client c : clients)
+		{
+			System.out.println(c.getName());
+		}
+		
+		return clients;
+	}
 /*	@RequestMapping(
 			method=RequestMethod.GET, 
 			value="getAll.do", 
@@ -334,6 +350,8 @@ public class AjaxController
 		//save it
 		bl.addProduct(newProduct);
 		
+		
+		
 		//grab it
 		Set<Product> savedProduct = bl.getProductByName(product.getName());
 		
@@ -381,31 +399,7 @@ public class AjaxController
 	@ResponseBody
 	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
-		//	The system puts all information into a custom Client object
-		//		and is parsed on this side, to get all of the items needed.
-		//		
-		
-//		System.out.println(client.getStrAddId());
-//
-//		State state = bl.getState(Integer.parseInt(client.getStateId()));
-//		Address address = new Address(Integer.parseInt(client.getStrAddId()), client.getAddLine1(), client.getAddLine2(), 
-//			client.getCity(), state, client.getZip());
-//		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
-//		Client newClient = new Client(Integer.parseInt(client.getStrId()), client.getName(), client.getEmail(),
-//				client.getPocName(), client.getPhone(), client.getFax(),
-//				address, clientType);
-//		bl.addClient(newClient);
-//		clients = bl.getAllClients();
-//		req.setAttribute("clients",clients); // commandName=this blank object
-//		List<State> states = bl.getAllStates();
-//		req.setAttribute("states", states);
-//	
-//		List<ClientType> clientTypes = bl.getClientTypes();
-//		req.setAttribute("clientTypes", clientTypes);
-		
-//		req.setAttribute("products",products); // commandName=this blank object
-//		List<CategoryDescription> catDesc = bl.getAllCatDesc();
-//		req.setAttribute("catDesc", catDesc);
+		 
 		
 		return "productPage";
 	}
@@ -421,7 +415,50 @@ public class AjaxController
 		//		set of Products, and remove them from the set. Then, we should
 		//		be able to delete the product.
 		//	Could do something similar for the update if the CategoryDescription's change
+		
+		Product tempProduct = bl.getProduct(product.getDelName());
+		System.out.println(tempProduct.getId());
+		Set<CategoryDescription> allCats = new HashSet<CategoryDescription>(bl.getAllCatDesc());
+		
+		Set<CategoryDescription> temp = new HashSet<CategoryDescription>(tempProduct.getCategoryDesc());
 
+		System.out.println(allCats.toString());
+		System.out.println(tempProduct.getCategoryDesc().toString());
+		System.out.println(temp.toString());
+		for(CategoryDescription cd : tempProduct.getCategoryDesc()){
+			
+			temp.remove(cd);
+			
+		}
+
+		System.out.println(temp.toString());
+		Product delProduct = new Product(tempProduct.getId(), temp);
+		
+		//GO THROUGH ALL CATEGORY DESCRIPTIONS
+//		for(CategoryDescription cd : allCats){
+//			
+//			//GO THROUGH SET<PRODUCT> 
+//			for(Product pd : cd.getproductCats()){
+//				
+//				if(pd.getId() == delProduct.getId()){
+//					System.out.println("match");
+//					
+//					allCats.remove(delProduct);
+//				}
+//			}
+//		}
+//		
+		
+		
+		
+		bl.deleteProduct(delProduct);
+	
+		//	find the matches between the product and category description, where
+		//	the product id matches the set from product list in category description.
+		
+		
+		
+		
 		
 //		
 //		Product delProduct = bl.getProduct(productName);

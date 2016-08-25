@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -18,6 +20,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="BEARDO_CATEGORY_DESCRIPTIONS")
+@org.hibernate.annotations.Entity(dynamicUpdate = true)
 public class CategoryDescription
 {
 	@Id
@@ -29,7 +32,12 @@ public class CategoryDescription
 	@Column(name="CATEGORY_DESCRIPTION", nullable=false)
 	private String description;
 	
-	@ManyToMany(mappedBy="categoryDesc")//POSSIBLY NEED SOMETHING MORE HERE
+	
+	//
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="PRODUCT_CATEGORIES", 
+			joinColumns=@JoinColumn(name="CATEGORY_ID"),
+			inverseJoinColumns=@JoinColumn(name="PRODUCT_UPC"))//POSSIBLY NEED SOMETHING MORE HERE
 	private Set<Product> productCats;
 
 	public int getId()

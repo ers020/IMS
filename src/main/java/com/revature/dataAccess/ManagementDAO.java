@@ -231,9 +231,24 @@ public class ManagementDAO
 	
 	//////////////////////// BEGIN DELETE PRODUCT //////////////////////////////////////
 	
-	public void deleteProduct(Product obj) 
+	public void deleteProduct(Product product) 
 	{
-		session.delete(obj);  //BTW.  I *THINK* THE OBJ MUST BE PERSISTED
+		System.out.println(product.getId());
+		String hql = "DELETE Product WHERE id =:id";
+		Query query = session.createQuery(hql);
+		query.setParameter("id", product.getId());
+		int result = query.executeUpdate();
+		System.out.println(result);
+//		String qsl = "DELETE PRODUCT_CATEGORIES WHERE PRODUCT_UPC =? AND ";
+//		Query query = session.createQuery(hql);
+//		query.setParameter("id", product.getId());
+//		//int done = query.executeUpdate();
+//		System.out.println("done");
+//		"DELETE Product WHERE id =:id";
+//		 query = session.createQuery(hql2);
+//		query.setParameter("id", product.getId());
+//		int result = query.executeUpdate();
+//		System.out.println("Delete went through " + result);
 	}
 	
 	public List<Product> getClientProds(int clientId)

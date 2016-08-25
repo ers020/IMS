@@ -197,7 +197,7 @@ public class DataLayerAccess
 	public void deleteProduct(Product product) {
 	//	log.info("'Terminating' client");
 		Transaction tx = session.beginTransaction();
-		
+		System.out.println(product.getId());
 		try{
 			
 			dao.deleteProduct(product);

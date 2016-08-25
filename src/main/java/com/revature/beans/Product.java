@@ -20,7 +20,7 @@ import org.hibernate.type.BlobType;
 
 @Entity
 @Table(name="BEARDO_PRODUCTS")
-//@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
+@org.hibernate.annotations.Entity(dynamicUpdate = true)  //NO, YOU CANNOT SIMPLY PUT THIS AFTER @ENTITY....I'M NOT SURE WHY
 public class Product 
 {
 	@Id
@@ -59,7 +59,7 @@ public class Product
 	@Column(name="PRODUCT_IMAGE")
 	private BlobType image;  //OPTIONAL, ALSO NOT SURE IF BLOBTYPE
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="PRODUCT_CATEGORIES", 
 			joinColumns=@JoinColumn(name="PRODUCT_UPC"),
 			inverseJoinColumns=@JoinColumn(name="CATEGORY_ID"))
@@ -287,6 +287,12 @@ public class Product
 		this.delName = delName;
 	}
 	
+	public Product(int id, Set<CategoryDescription> categoryDesc) {
+		super();
+		this.id = id;
+		this.categoryDesc = categoryDesc;
+	}
+
 	public Product(String delName, String strId, String[] catDescId)
 	{
 		super();

@@ -107,6 +107,8 @@ public class BusinessLayer {
 	
 	//'delete' product
 	public void deleteProduct(Product product){
+		
+		System.out.println(product.getId());
 		dla.deleteProduct(product);
 	}
 	
