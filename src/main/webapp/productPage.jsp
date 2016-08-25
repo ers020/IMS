@@ -240,7 +240,6 @@ function getProduct(pName)
 			$("#eDescCat").val(eProduct.catDescIntId);
 			
 			
-			
 		});
 
 	}
@@ -275,7 +274,9 @@ function getProduct(pName)
 				catDescId:catDesc
 			}),
 			success: function(){
+				window.location.reload(true);
 				alert("Added Product successfully!");
+				
 			}
 		});
 	});
@@ -292,24 +293,25 @@ function getProduct(pName)
 			var stock = jQuery("#eStock").val();
 			var quantity = jQuery("#ePreQuan").val();
 			var retail = jQuery("#eRetailPrice").val();
-			var catDesc = jQuery("#eDescCat").val();
+			var pCatDesc = jQuery("#eDescCat").val();
 			
 			jQuery.ajax({
 			// contentType application/json
 			headers: {          
     			"Content-Type": "application/json"
     		},
-			url: "http://localhost:9001/IMS/editProducts.do",
+			url: "http://localhost:9001/IMS/editProduct.do",
 			method: "POST",
 			data: JSON.stringify({
 				strId : prodId, name : prodName, 
 				sName : shortName, description : prodDesc, 
-				cost : cost, size : size, stock : stock, 
+				strCost : cost, strSize : size, strStock : stock, 
 				strPreQuantity : quantity, strRetailPrice : retail,
-				catDescId : catDesc
+				catDescId : pCatDesc
 			}),
 			success: function(){
 				alert("Edited Product successfully!");
+				$('#modal').modal('toggle');
 			}
 		});
 	});
@@ -333,6 +335,7 @@ function getProduct(pName)
 			}),
 			success: function(){
 				alert("Deleted Product successfully!");
+				$('#modal').modal('toggle');
 			}
 		});
 	});

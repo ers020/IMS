@@ -422,7 +422,12 @@ public class DataLayerAccess
 		return product;
 	}
 	
-
+	public double getPrice(String type)
+	{
+		double price = dao.getPrice(type);
+		return price;
+	}
+	
 	
 	
 }

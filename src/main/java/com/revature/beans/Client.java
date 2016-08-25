@@ -28,32 +28,40 @@ public class Client
 	@Column(name="CLIENT_ID", nullable=false)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="CLIENT_ID_GEN")
 	@SequenceGenerator(name="CLIENT_ID_GEN", sequenceName="CLIENT_ID_SEQ", initialValue=2, allocationSize=1)
-	
+	//@JsonProperty("id")
 	private int id;  //PK, FK FOR ORDER AND CLIENT_TYPE
 
+	//@JsonProperty("name")
 	@Column(name="CLIENT_NAME", nullable=false)
 	private String name;
 
+	//@JsonProperty("email")
 	@Column(name="CLIENT_EMAIL", nullable=false)
 	private String email;
 
+	//@JsonProperty("pocName")
 	@Column(name="CLIENT_POINT_OF_CONTACT_NAME", nullable=false)
 	private String pocName;  //POINT_OF_CONTACT_NAME
 
+	//@JsonProperty("phone")
 	@Column(name="CLIENT_PHONE", nullable=false)
 	private String phone;
 
+	//@JsonProperty("fax")
 	@Column(name="CLIENT_FAX", nullable=false)
 	private String fax;
  
+	//@JsonProperty("address")
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="CLIENT_ADDRESS", nullable=false, unique=true)
 	private Address address;
-
+	
+	//@JsonProperty("clientType")
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="CLIENT_TYPE", nullable=false)
 	private ClientType clientType;  //OneToMany for Clients to Types
-
+	
+	//@JsonProperty("clientOrders")
 	@OneToMany(mappedBy="client", fetch=FetchType.EAGER)
 	Set<Order> clientOrders = new HashSet<Order>();
 

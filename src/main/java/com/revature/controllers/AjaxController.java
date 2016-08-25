@@ -127,7 +127,7 @@ public class AjaxController
 
 		String clientName = client.getDelName();
 		
-		System.out.println(clientName);
+		//System.out.println(clientName);
 		
 		Client newClient = bl.getClient(clientName);
 
@@ -146,7 +146,7 @@ public class AjaxController
 	
 	@RequestMapping(value="getClientsByType.do", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public List<Client> listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
+	public Client[] listClients(HttpServletRequest req, HttpServletRequest resp, @RequestBody String type)
 	{	
 		//	The system puts all information into a custom Client object
 		//		and is parsed on this side, to get all of the items needed.
@@ -159,17 +159,24 @@ public class AjaxController
 //		System.out.println("Type: " + cType);
 		
 		List<Client> clients = bl.getClientList(1);
+//		
+		Client[] clientArray = new Client[clients.size()];
 		
-		for(Client c : clients)
-		{
-			System.out.println(c.getName());
+		for(int x = 0; x < clients.size(); x++){
+			
+			clientArray[x] = clients.get(x);
 		}
 		
-		System.out.println(clients.size());
-	
+//		for(Client c : clients)
+//		{
+//			System.out.println(c.getName());
+//		}
+//		
+//		System.out.println(clients.size());
+		//req.setAttribute("specClients", clients);
 //		req.getSession().setAttribute("clients", clients);
 		
-		return clients;
+		return clientArray;
 	}
 	
 	@RequestMapping(value="clientInfo.do", method=RequestMethod.GET)
@@ -270,7 +277,68 @@ public class AjaxController
 	 * ================!!!!!INVOICE CONTOLLER STUFFS!!!!!================
 	 * ==================================================================
 	 */
+	@RequestMapping(value="getProds.do", method=RequestMethod.GET, headers = "Accept=application/json", produces="application/json")
+	@ResponseBody
+	public String[] getProds(HttpServletRequest req, HttpServletRequest resp)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		String cType = (String) type;
+
+//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
+		
+//		System.out.println("Type: " + cType);
+		
+		List<Product> prods = bl.getAllProducts();
+		String[] prodNames = new String[prods.size()];
+		int i = 0;
+		
+		for(Product c : prods)
+		{
+			prodNames[i] = c.getName();
+			System.out.println(c.getName());
+			i++;
+		}
+		
+		System.out.println(prods.size());
 	
+//		req.getSession().setAttribute("clientNames", prodNames);
+		
+		return prodNames;
+	}
+
+	@RequestMapping(value="getProdPrice.do", method=RequestMethod.GET, consumes="application/json", produces="application/json")
+	@ResponseBody
+	public String[] getProdPrice (HttpServletRequest req, HttpServletRequest resp, @RequestParam(value="var") String type)
+	{	
+		//	The system puts all information into a custom Client object
+		//		and is parsed on this side, to get all of the items needed.
+		//		
+		
+//		String cType = (String) type;
+
+//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
+		
+//		System.out.println("Type: " + cType);
+		
+		System.out.println("Getting price.");
+		
+		double price = bl.getPrice(type);
+		
+		String strPrice = String.valueOf(price);
+		
+		String[] retStr = new String[1];
+		
+		retStr[0] = strPrice;
+		
+		System.out.println("Price" + strPrice);
+	
+//		req.getSession().setAttribute("clientNames", prodNames);
+		
+		return retStr;
+	}	
 /*	public List<Invoice> getInvoices()
 	{
 		return invoices;
@@ -393,43 +461,61 @@ public class AjaxController
 		int prodCatId[] = new int[prodCats.size()];
 		
 		for(int x = 0; x < prodCats.size(); x++){
-			prodCatId[x] = prodCats.get(x).getId();
+			 prodCatId[x] = prodCats.get(x).getId();
 		}
 		
 		Product product = new Product(info.getId(), info.getName(), info.getsName(),
 							info.getDescription(), info.getCost(), info.getSize(),
 							info.getStock(), info.getQuantity(), info.getMsrp(), prodCatId);
 		
-	
+		List<CategoryDescription> catDesc = bl.getAllCatDesc();
+		request.setAttribute("catDesc", catDesc);
 		
 		return product;
 	}
 	
 	@RequestMapping(value="editProduct.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String editClient(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
+	public String editProduct(HttpServletRequest req, HttpServletRequest resp, @RequestBody Product product){
 		
 		//	The system puts all information into a custom Client object
 		//		and is parsed on this side, to get all of the items needed.
 		//		
 		
-//		System.out.println(client.getStrAddId());
+		//update Product's Set<CategoryDescription>
+				//List<CategoryDescription> descOptions = new ArrayList<CategoryDescription>();
+ 		
+		Product catDescSourceProduct = bl.getProduct(product.getName());
+		
+		Product updateProduct = new Product(Integer.parseInt(product.getStrId()), product.getName(),
+											product.getsName(), product.getDescription(), Double.parseDouble(product.getStrCost()),
+											product.getStrSize(), Integer.parseInt(product.getStrStock()),
+											Integer.parseInt(product.getStrPreQuantity()), Double.parseDouble(product.getStrRetailPrice()),
+											catDescSourceProduct.getCategoryDesc());
+
+		bl.addProduct(updateProduct);
+		
+		//System.out.println(product.getCatDescId().toString());
+		
+		//int[] descList = new int[product.getCatDescIntId().length];
+
+				
+//				for(int x = 0; x < product.getCatDescIntId().length; x++){
+//					descList[x] = product.getCatDescIntId(x);
+//				}
+//				
+//				
+//				for (int x = 0; x < descList.length; x++){
+//					descOptions.add(bl.getCatDescById(descList[x]));
+//				}
 //
-//		State state = bl.getState(Integer.parseInt(client.getStateId()));
-//		Address address = new Address(Integer.parseInt(client.getStrAddId()), client.getAddLine1(), client.getAddLine2(), 
-//			client.getCity(), state, client.getZip());
-//		ClientType clientType = bl.getClientType(Integer.parseInt(client.getClientTypeId()));
-//		Client newClient = new Client(Integer.parseInt(client.getStrId()), client.getName(), client.getEmail(),
-//				client.getPocName(), client.getPhone(), client.getFax(),
-//				address, clientType);
-//		bl.addClient(newClient);
-//		clients = bl.getAllClients();
-//		req.setAttribute("clients",clients); // commandName=this blank object
-//		List<State> states = bl.getAllStates();
-//		req.setAttribute("states", states);
-//	
-//		List<ClientType> clientTypes = bl.getClientTypes();
-//		req.setAttribute("clientTypes", clientTypes);
+//				Product updateProduct = new Product(Integer.parseInt(product.getStrId()),
+//						product.getName(), product.getsName(), product.getDescription(),
+//						Double.parseDouble(product.getStrCost()), product.getStrSize(), 
+//						Integer.parseInt(product.getStrStock()), Integer.parseInt(product.getStrPreQuantity()),
+//						Double.parseDouble(product.getStrRetailPrice()), descOptions);
+//				
+//				bl.addProduct(updateProduct);
 		
 //		req.setAttribute("products",products); // commandName=this blank object
 //		List<CategoryDescription> catDesc = bl.getAllCatDesc();
