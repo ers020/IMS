@@ -162,7 +162,7 @@
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <input id="addClient" type="button"  value="Add" class="btn btn-primary" ></input>
+        <button type="button" id="addClient" class="btn btn-primary" data-dismiss="modal">Add</button>
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
@@ -252,8 +252,8 @@
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <input id="editClient" type="button"  value="Update" class="btn btn-success" ></input>
-        <input id="deleteClient" type="button"  value="Delete" class="btn btn-danger" ></input>
+        <button id="editClient" type="button" class="btn btn-success" data-dismiss="modal">Update</button>
+        <button id="deleteClient" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
@@ -332,6 +332,7 @@
 			}),
 			success: function(){
 				alert("Added Client successfully!");
+				location.reload();
 			}
 		});
 	});
@@ -369,6 +370,7 @@ jQuery(document).ready(function(){
 			}),
 			success: function(){
 				alert("Edited Client successfully!");
+				location.reload();
 			}
 		});
 	});
@@ -390,6 +392,7 @@ jQuery(document).ready(function(){
 			}),
 			success: function(){
 				alert("Deleted Client successfully!");
+				location.reload();
 			}
 		});
 	});

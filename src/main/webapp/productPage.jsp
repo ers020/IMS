@@ -139,7 +139,7 @@
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <input id="addProduct" type="button"  value="Add" class="btn btn-primary" ></input>
+        <button id="addProduct" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
@@ -208,8 +208,8 @@
 	        </table>
 	      </div>
 	    <div class="modal-footer">
-        <input id="editProduct" type="button"  value="Update" class="btn btn-success" ></input>
-        <input id="deleteProduct" type="button"  value="Delete" class="btn btn-danger" ></input>
+        <button id="editProduct" type="button" class="btn btn-success" data-dismiss="modal">Update</button>
+        <button id="deleteProduct" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
       	</div>
 	    </div>
@@ -276,6 +276,7 @@ function getProduct(pName)
 			success: function(){
 				window.location.reload(true);
 				alert("Added Product successfully!");
+				location.reload();
 				
 			}
 		});
@@ -311,7 +312,7 @@ function getProduct(pName)
 			}),
 			success: function(){
 				alert("Edited Product successfully!");
-				$('#modal').modal('toggle');
+				location.reload();
 			}
 		});
 	});
@@ -335,7 +336,7 @@ function getProduct(pName)
 			}),
 			success: function(){
 				alert("Deleted Product successfully!");
-				$('#modal').modal('toggle');
+				location.reload();
 			}
 		});
 	});
