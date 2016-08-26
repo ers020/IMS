@@ -17,7 +17,7 @@ table, th, td, tr{
 }
 
 th, td, tr{
-	width: 10em;
+	width: 20em;
 }
 
 ul{
@@ -67,6 +67,7 @@ li a:active{
 
 .header, .nav, .footer{
 	margin: 0 auto 0 auto;
+	padding-right: 100px;
 	width: 100%;
     background: red; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#003399, #333333); /* For Safari 5.1 to 6.0 */
@@ -128,7 +129,7 @@ li a:active{
 
 #dropDownClient{
 	float: right;
-	padding-right: 2em;
+	padding-right: 12em;
 }
 
 label{
@@ -138,5 +139,19 @@ label{
 #modal-table{
 	text-align: center;
 }
+input[type="text"][disabled] {
+   color: transparent;
+   border: none;
+}
+
+#invoiceTable{
+	text-align: center;
+
+}
+
+#title{
+	float: left;
+}
+
 
 

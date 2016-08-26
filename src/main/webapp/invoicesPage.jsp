@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,10 +12,10 @@
   	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- MODAL BOOTSTRAP -->
 	
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.css">
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
-	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.js"></script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/bootstrap.css">
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/bootstrap.min.css">
+	<script src="${pageContext.servletContext.contextPath}/javascript/bootstrap.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/javascript/bootstrap.min.js"></script>
 	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -24,13 +24,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet" type="text/css">
 	
 	<!-- Custom CSS -->
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/index.css">
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/index.css">
 
 <script type="text/javascript">
-function openModal()
-{
-	$("#myModal").modal()
-}
 
 function radioFunc()
 {
@@ -155,75 +151,75 @@ function qntyUnlock()
 				//alert("success");
 			}
 		});
+			
+	setTimeout(changeSubTotal(), 1000);
 }
 
-function cType(type)
+function changeTotal()
 {
-	var ct = type;
-	if(ct == "incoming")
-	{
-		ct = 1;
-		jQuery.ajax
-		({
-			// contentType application/json
-			headers: 
-			{          
-    			"Content-Type": "application/json"
-    		},
-			url: "http://localhost:9001/IMS/getClientsByType.do",
-			method: "POST",
-			data: JSON.stringify
-					({
-						type : ct
-					}) ,
-			success: function(resp)
-			{
-				//alert("Edited Client successfully!");
-				
-				$('#cList').load(document.URL +  ' #cList');
-				alert(ct);				
-				
-				/* $("#cList").html("<option value=\"def\" selected>Please select a client!</option>");
-				$.each(resp, function(c, client){
-					$("#cList").append(
-					"<option value=" + c.id + " onclick=\"javascript:getProducts(" + c.name + ")>" + c.name + "</option>"
-					);
-				}); */
-			}
-		});
-	}
+	var tagId = "subtotal";
+	var i = 0;
+	var tot = 0;
 	
-	else
+	//alert(tagId);
+	
+	while(document.getElementById(tagId) != null)
 	{
-		ct = 2;
-		jQuery.ajax
-		({
-			// contentType application/json
-			headers: 
-			{          
-    			"Content-Type": "application/json"
-    		},
-			url: "http://localhost:9001/IMS/getClientsByType.do",
-			method: "POST",
-			data: JSON.stringify
-			({
-				type : ct
-			}),
-			success: function(resp)
-			{
-				//alert("Edited Client successfully!");
-				
-				$('#cList').load(document.URL +  ' #cList');
-				alert(ct);
-				
-				/* $("#cList").html("<option value=\"def\" selected>Please select a client!</option>");
-				$.each(resp, function(c, client){
-					$("#cList").append(
-					"<option value=" + c.id + " onclick=\"javascript:getProducts('" + c.name + "')>" + c.name + "</option>"
-					);
-				}); */
-			}
-		});
+		tot += parseFloat(document.getElementById(tagId).value);
+		
+		tot = tot + parseFloat(tot * parseFloat(7.5 / 100));
+		
+		i++;
+		tagId += i;
+	}
+		
+	//alert(tot);
+	
+	document.getElementById("total").innerHTML = tot;
+	
+	//$("#total").value = tot;
+}
+
+function addProduct()
+{
+	var c = document.getElementById("dropDownClient").firstChild;
+    var cOption = c.options[c.selectedIndex].value;
+	var p = document.getElementById("prodBox").firstChild;
+    var pOption = p.options[p.selectedIndex].value;
+    
+    alert(p);
+    alert(c);
+    
+    var table = document.getElementById("invoiceTable");
+    var row = table.insertRow(1);
+    var cell0 = row.insertCell(0);
+    var cell1 = row.insertCell(1);
+    var cell2 = row.insertCell(2);
+    var cell3 = row.insertCell(3);
+    var cell4 = row.insertCell(4);
+    
+    cell0.innerHTML = cOption;
+    cell1.innerHTML = pOption;
+    cell2.innerHTML = $("#prodCost").val();
+    cell3.innerHTML = $("#qnty").val();
+    cell4.innerHTML = $("#subtotal").val();
+    
+	/* var newRow = "<tr><td>" + cOption + "</td><td>" + pOption + "</td><td>" + $("#prodCost").val() + "</td><td>" + $("#qnty").val() + "</td><td>" + $("#subtotal").val() + "</td></tr>"
+	document.getElementById("invoiceTable").appendChild(newRow); */
+}
+
+function submit()
+{
+	var table = document.getElementById("invoiceTable");
+	var invoice = [][];
+	
+	for (var i = 0, row; row = table.rows[i]; i++)
+	{
+		var client = row.cells[0].value;
+		var product = row.cells[0].value;
+		var cost = row.cells[0].value;
+		var quantity = row.cells[0].value;
+		var subtotal = row.cells[0].value;
 	}
 }
 
@@ -234,7 +230,7 @@ function changeSubTotal()
 	
 	var sub = quantity * price;
 	
-	alert("Q: " + quantity + ", P: " + price + ", S: " + sub);
+	//alert("Q: " + quantity + ", P: " + price + ", S: " + sub);
 	
 	document.getElementById("subtotal").value = sub;
 	
@@ -257,6 +253,8 @@ function changeSubTotal()
 			$("#subt").val(resp);
 		}
 	}); */
+	
+	changeTotal();
 }
 </script> 
 
@@ -278,17 +276,18 @@ function changeSubTotal()
 	
 	<div class="container body .col-xs-12 .col-sm-6 .col-lg-8">
 	<div id="title">
-	<h2>Invoice Creation</h2>
+		<h2>Invoice Creation</h2>
 	</div>
 	<br />
-	<div id="radioBtn">
+	<div id="radioBtn" class="radio">
 		<label><input type="radio" onclick="radioFunc()" id="r1" name="invChoice" value="Incoming"/>Supplier</label><br/>
-		<label><input type="radio" onclick="radioFunc()" id="r2" name="invChoice" value="Outgoing"/>Retailer</label>
+		<label><input type="radio" onclick="radioFunc()" id="r2" name="invChoice" value="Outgoing"/>Retailer</label><br/>
 	</div>
 	<br />
 	<br />
 	<span id="dropDownClient" onchange="javascript:doobie()"></span>
 	<br />
+		<div id="tableHolder">
 		<table id="invoiceTable">
 			<tr>
 		    	<th>Product</th>
@@ -297,21 +296,21 @@ function changeSubTotal()
 		    	<th>Sub-total</th>
 		    	<th>Option</th>
 		  	</tr>
-		  	<tr>
+		  	<tr id="dynamics">
 				<td>
-					<span id="prodBox" onchange="javascript:qntyUnlock()"></span>
+					<span id="prodBox" class="form-control" onchange="javascript:qntyUnlock()"></span>
 				</td>
 		  		<td>
-		  			<input type="number" id="prodCost" disabled="disabled" name="prodCost" value="${p.cost}"> 
+		  			<input type="number" id="prodCost" class="form-control" disabled="disabled" name="prodCost" value="${p.cost}">
 		  		</td>  
 		  		<td>
-		  	 		<input type="number" id="qnty" disabled="disabled" name="quantity" value="1" onkeydown="javascript:changeSubTotal()" onchange="javascript:changeSubTotal()"> <!-- <label value="0" name="initalCost"></label> -->
+		  	 		<input type="number" id="qnty" class="form-control" disabled="disabled" name="quantity" value="0" onkeydown="javascript:changeSubTotal()" onchange="javascript:changeSubTotal()"> 
 		  		</td>
 		  	 	<td>
-		  	 		<input type="number" disabled="disabled" id="subtotal" name="subtotal"> 
+		  	 		 <input type="number" class="form-control" disabled="disabled" id="subtotal" name="subtotal"> 
 		  	 	</td>
 		  	 	<td>
-		  	 		<input type="button" value="Add!">
+		  	 		<input type="button" value="Add!" onclick="javascript:addProduct()"/>
 		  	 	</td>
 		  	 </tr>
 		  	
@@ -321,21 +320,26 @@ function changeSubTotal()
 		 
 		  	
 		</table>
+		</div>
+		<br />
+		<br />
+		<br />
 		<br />
 		
-		<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
-			<jsp:include page="/footerPage/footer.jsp"></jsp:include>
-		</div>
-		
+		<br />
 		<br />
 	</div>
-	
+	<div class="container footer .col-xs-12 .col-sm-6 .col-lg-8">
+		<jsp:include page="/footerPage/footer.jsp"></jsp:include>
+		</div>
+	<br />
 	</div>
 	
 	<br />
-	
+	<button  onclick="javascript:changeTotal()">Change Total</button>
+	<div>
 	<input id="cVal" name="clientType" type="hidden" value="1"/>
 	<input id="pVal" name="clientType" type="hidden" value="0"/>
-	
+	</div>
 </body>
 </html>

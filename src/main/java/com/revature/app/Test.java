@@ -1,15 +1,9 @@
 package com.revature.app;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
-import com.revature.beans.CategoryDescription;
-import com.revature.beans.Product;
-import com.revature.dataAccess.DataLayerAccess;
+import com.revature.beans.Client;
+import com.revature.beans.Order;
+import com.revature.dataAccess.BusinessLayer;
 
 public class Test 
 {
@@ -17,15 +11,20 @@ public class Test
 	//private static Logger log = Logger.getRootLogger();
 	
 
-	@SuppressWarnings("unchecked")
+	
 	public static void main(String[] args) 
 	{		
-		DataLayerAccess dla = new DataLayerAccess();
+		BusinessLayer bl = new BusinessLayer();
 		
-		Product product = dla.getProduct("Gilette Fusion");
+		Client client = bl.getClient("The Bearded Duo");
 		
-		Set<CategoryDescription> catDesc = product.getCategoryDesc();
-		Set<CategoryDescription> allCat = new HashSet<CategoryDescription>(dla.getAllCatDesc());
+		//yes, I did the math. Accurate.
+		double subtotal = 977.50;
+		double taxes = 73.275;
+		double total = 1050.775;
+				
+		
+		Order order = new Order();
 
 		 
 		

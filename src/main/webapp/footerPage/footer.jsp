@@ -9,7 +9,7 @@
 	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
 	
 	<!-- jQuery -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/javascript/jquery.min.js"></script>
 	
 	<!-- CSS Google Text -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet" type="text/css">

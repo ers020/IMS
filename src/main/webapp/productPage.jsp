@@ -15,10 +15,10 @@
 
 
 	<!-- BootStrap -->
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.css">
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/bootstrap.min.css">
-	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.js"></script>
-	<script src="${pageContext.servletContext.contextPath}/resources/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/bootstrap.css">
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/bootstrap.min.css">
+	<script src="${pageContext.servletContext.contextPath}/javascript/bootstrap.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/javascript/bootstrap.min.js"></script>
 	
 	<!-- jQuery -->
 	
@@ -27,7 +27,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,900" rel="stylesheet" type="text/css">
 	
 	<!-- Custom CSS -->
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/index.css">
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/css/index.css">
 
 </head>
 <body>
@@ -219,7 +219,6 @@
 </body>
 
 <script type="text/javascript">
-
 function getProduct(pName)
 	{
 		var productName = pName;

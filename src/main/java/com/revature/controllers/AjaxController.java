@@ -121,15 +121,6 @@ public class AjaxController
 	@ResponseBody
 	public String[] listClients(HttpServletRequest req, HttpServletRequest resp, @RequestParam(value="var") String type)
 	{	
-		//	The system puts all information into a custom Client object
-		//		and is parsed on this side, to get all of the items needed.
-		//		
-		
-//		String cType = (String) type;
-
-//		int cType = Integer.parseInt(type.substring(type.lastIndexOf(':')+1,	type.lastIndexOf(':')+2));
-		
-//		System.out.println("Type: " + cType);
 		
 		System.out.println("Type: " + Integer.parseInt(type));
 		
@@ -606,7 +597,22 @@ public class AjaxController
 	 */
 	
 	
+	/* ==================================================================
+	 * ================!!!!!REPORT CONTOLLER STUFFS!!!!!=================
+	 * ==================================================================
+	 */	
+	@RequestMapping(value="reportPage.do", method=RequestMethod.GET)
+	public String reportPage(HttpServletRequest req){
+		
+		
+		return "reportPage";
 	
+	}
 
+	
+	/* ==================================================================
+	 * ================!!!!!REPORT CONTOLLER STUFFS!!!!!=================
+	 * ==================================================================
+	 */	
 	
 }
